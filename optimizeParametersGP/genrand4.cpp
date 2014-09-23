@@ -31,12 +31,12 @@ randpop p;
 
 int main (int argc, char *argv[])  /* pickup command line arguments */
 {
-//  clrscr();
+    //  clrscr();
 
     if (argc > 0 ) {
         time_t t;
         FILE *stream;
-//    int y, x, true;
+        //    int y, x, true;
         int y, x;
         char expresionOne[ARRAYSIZE];
         char expresionTwo[ARRAYSIZE];
@@ -47,17 +47,17 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
         srand((unsigned) time(&t));  // seed both rands
         p.gp_srand( (unsigned)time(NULL) ); // seed the rand
 
-//    gotoxy(15,11);
+        //    gotoxy(15,11);
         cout<< "Stand by building population of size "<< atoi(argv[1]) << "\n";
 
-//    stream = fopen("pop1.dat", "wt");
+        //    stream = fopen("pop1.dat", "wt");
         fileName[0] = 0;
         strcpy(fileName, argv[2]);
         strcat(fileName, ".pop.dat");
 
-//cout << fileName << "\n";
+        //cout << fileName << "\n";
 
-//exit(1);
+        //exit(1);
 
         stream = fopen(fileName, "wt");
 
@@ -67,24 +67,24 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
             expresionOne[0] = 0;
             strcpy(expresionOne, " ("); // start out with open "("
             // make new random operator in ops
-//      p.operators(copyPtr);
-//printf("%s\n\n", p.operators());
-//printf(">%s<\n\n", copyPtr);
-//      strcat(expresionOne, p.operators()); // add the op
-//      p.operators(opArray); // add the op
-//printf("\n>%s<\n\n", p.operators(opArray));
+            //      p.operators(copyPtr);
+            //printf("%s\n\n", p.operators());
+            //printf(">%s<\n\n", copyPtr);
+            //      strcat(expresionOne, p.operators()); // add the op
+            //      p.operators(opArray); // add the op
+            //printf("\n>%s<\n\n", p.operators(opArray));
             strcat(expresionOne, p.operators(opArray)); // add the op
-//      strcat(expresionOne, copyPtr); // add the op
-//      strcat(expresionOne, 0); // add the null
-//printf("%s\n", expresionOne);
+            //      strcat(expresionOne, copyPtr); // add the op
+            //      strcat(expresionOne, 0); // add the null
+            //printf("%s\n", expresionOne);
 
-//return 1;
+            //return 1;
 
-//printf("%s\n", p.operators());
-//printf("%s\n", p.operators());
-//printf("%s\n", p.operators());
+            //printf("%s\n", p.operators());
+            //printf("%s\n", p.operators());
+            //printf("%s\n", p.operators());
 
-//return 1;
+            //return 1;
 
 
             buildString('l','y');   //
@@ -96,7 +96,7 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
             expresionTwo[0] = 0;
             strcpy(expresionTwo, "("); // start out with open "("
             p.operators(opArray); // add the op
-//      strcat(expresionTwo, p.operators()); // add the op
+            //      strcat(expresionTwo, p.operators()); // add the op
             strcat(expresionTwo, opArray); // add the op
             buildString('l','n');   //   with no F in string
             strcat(expresionTwo, ArrayLeft);
@@ -107,9 +107,9 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
             //printf("%s", expresionOne);
             //printf("%s\n", expresionTwo);
 
-//      fprintf(stream, expresionOne);
+            //      fprintf(stream, expresionOne);
             fprintf(stream,"%s",expresionOne);
-//      fprintf(stream, expresionTwo);
+            //      fprintf(stream, expresionTwo);
             fprintf(stream,"%s",expresionTwo);
 
             fprintf(stream,"%s","\n");
@@ -130,7 +130,7 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
     }
     else
         p.instruc();
-//  }
+    //  }
     return 0;
 }
 
@@ -139,14 +139,14 @@ void buildString(char side, char boolein)
 {
     char function[60];
     int x;
-//  char *copyPtr;
+    //  char *copyPtr;
     char opArray[2];
     char numberStr[7];
 
     function[0] = 0;    // reset string to clear it
     strcpy(function, " ("); // start out with open "("
-//  strcat(function, p.operators()); // add the op
-//  p.operators(copyPtr);
+    //  strcat(function, p.operators()); // add the op
+    //  p.operators(copyPtr);
     strcat(function, p.operators(opArray)); // add the op
 
     x = (p.gp_rand() % 4); // makes 0 to 3
@@ -182,7 +182,7 @@ void buildString(char side, char boolein)
 //-----------------------------------------------------------------
 void leaf(char boolein)
 {
-//  char *copyPtr;
+    //  char *copyPtr;
     char opArray[2];
     char numberStr[7];
 
@@ -192,10 +192,10 @@ void leaf(char boolein)
     else
         strcpy(leafArray, " (");
 
-//  p.operators(copyPtr); // add the op
+    //  p.operators(copyPtr); // add the op
     strcat(leafArray, p.operators(opArray));
-//  strcat(leafArray, copyPtr);
-//  cout << "should only be F(* --->"<< leafArray << endl;
+    //  strcat(leafArray, copyPtr);
+    //  cout << "should only be F(* --->"<< leafArray << endl;
     strcat(leafArray, p.numberStr(boolein, numberStr));
     strcat(leafArray, p.numberStr(boolein, numberStr));
     strcat(leafArray, ")");

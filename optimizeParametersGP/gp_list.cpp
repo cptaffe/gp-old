@@ -57,11 +57,11 @@ void gp_list::sort()
             head->next = n1;
         }
         //current = head;
-//cout << endl;
+        //cout << endl;
         for(current=head; current->next->next!=0; current=current->next) {
             //while (current->next->next != 0) {
             if (current->next->fitness < current->next->next->fitness) {
-//cout << current->next->fitness << " < " << current->next->next->fitness << ", ";
+                //cout << current->next->fitness << " < " << current->next->next->fitness << ", ";
                 n1 = current;
                 n2 = current->next;        // setup
                 n3 = current->next->next;
@@ -69,14 +69,14 @@ void gp_list::sort()
                 n2->next = n3->next;
                 n1->next = n3;             // and swap
                 n3->next = n2;
-//cout << "swap " << "n2 = " << n2->fitness << " and " << "n3 = "<< n3->fitness << endl;
+                //cout << "swap " << "n2 = " << n2->fitness << " and " << "n3 = "<< n3->fitness << endl;
             }
             //current = current->next;   // increment
         }
     }
-//n1 = 0;
-//n2 = 0;        // setup
-//n3 = 0;
+    //n1 = 0;
+    //n2 = 0;        // setup
+    //n3 = 0;
     // list should now be highest fitness first
     //current = head;
     //cout << endl;
@@ -84,7 +84,7 @@ void gp_list::sort()
     //cout << "  " << n1->fitness;
     //current = current->next;
     //}
-//cout << endl << length << endl;
+    //cout << endl << length << endl;
 
 }
 
@@ -98,7 +98,7 @@ int gp_list::add(char *d, int f)
     // always add at end of list
 
     if (!(dataPtr =  new char[strlen(d)+1])) {
-//    move(1, 16);
+        //    move(1, 16);
         cout << "Insufficient memory for Data to node";
         return 1;
     }
@@ -107,7 +107,7 @@ int gp_list::add(char *d, int f)
     if (!(n = new gp_node(dataPtr, f))) {
         delete dataPtr;  // delete because out of memory for node
         dataPtr = 0;
-//    move(1, 19);
+        //    move(1, 19);
         cout << "Insufficient memory for node";
         return 1;
         //exit (1);
@@ -133,12 +133,12 @@ int gp_list::getMin()
 
     n = head;      // set to first node
     if (n == 0) {
-//move(1,6);
+        //move(1,6);
         printf("    null\n");
         exit(1);
     }
     while (n !=0 && min > 1) {
-//move(1,1);
+        //move(1,1);
         //printf(" Min %3d Fitness %3d", min, n->fitness);
         if (n->fitness < min) min = n->fitness; // make min the lowest fitness
         n=n->next;
@@ -188,7 +188,7 @@ int gp_list::remove()
     delete current;
     //current = head;
     //current = 0;
-//cout <<"               Kill" << endl;
+    //cout <<"               Kill" << endl;
     return 1;
 }
 
@@ -203,8 +203,8 @@ char *gp_list::SpinString(unsigned long long rnd)
     char *ptr;  // pointer to the string
     unsigned long long sum = 0;
 
-//move(1, 7);
-//cout << " Start SpinString...";
+    //move(1, 7);
+    //cout << " Start SpinString...";
     n = head;      // set to first node
     //ptr = n->getdata(); // set to the first one
     while (n->next !=0) { // till end of list
@@ -234,10 +234,10 @@ unsigned long long gp_list::getMaxSpin(void)
     //while (n->next !=0 && n->next->fitness != 0) { // only up till zero spinner value
     while (n->next !=0) { // only up till zero spinner value
         maxSpin += n->fitness;
-//cout << maxSpin << " >= " << rnd << endl;
+        //cout << maxSpin << " >= " << rnd << endl;
         n=n->next;
     }
-//cout << "maxSpin  ' "<< maxSpin << endl;
+    //cout << "maxSpin  ' "<< maxSpin << endl;
 
     return maxSpin;
 }
@@ -293,7 +293,7 @@ int gp_list::changeStr(char *add, char *del)
     char *dataPtrOut;
 
     if (!(dataPtrIn =  new char[strlen(add)+1])) {
-//    move(1, 16);
+        //    move(1, 16);
         printf("Insufficient memory for Data to node");
         return 1;
         //exit (1);
@@ -303,15 +303,15 @@ int gp_list::changeStr(char *add, char *del)
     current = head;
     while (current != 0) {
         //clrscr();
-//printf("\n%s\ncompar\n%s\n", current->data, del);
+        //printf("\n%s\ncompar\n%s\n", current->data, del);
         if (strcmp(current->data,del) == 0) { // find the match
             break;  // if the same string then break out of the loop
         }
         //current->data;
         current = current->next;
     }
-//printf("\n%s\n", add);
-//printf("\n%s\n", dataPtrIn);
+    //printf("\n%s\n", add);
+    //printf("\n%s\n", dataPtrIn);
     dataPtrOut = current->data;
     current->data = dataPtrIn;
     /*

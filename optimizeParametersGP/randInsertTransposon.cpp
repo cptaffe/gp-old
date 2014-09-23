@@ -33,21 +33,21 @@ using namespace std;
 char *randpop::operators(char *ptr)
 {
     char operators[] = {'*','-','+','/'};
-//  char *ptr = new char[2];
-//  char ptr[2]; // short array for ops char & null
-//  char array[] = {0,0};
-//  array[0] = operators[rand() % 4];
+    //  char *ptr = new char[2];
+    //  char ptr[2]; // short array for ops char & null
+    //  char array[] = {0,0};
+    //  array[0] = operators[rand() % 4];
     ptr[0] = operators[rand() % 4];
     ptr[1] = 0;
-//  array[1] = 0; // null the rest
-//   ptr = array;
-//  printf("ptr->%c<-\n",array[0]);
-//  printf("ptr->%s<-\n",ptr);
+    //  array[1] = 0; // null the rest
+    //   ptr = array;
+    //  printf("ptr->%c<-\n",array[0]);
+    //  printf("ptr->%s<-\n",ptr);
 
-//exit 0;
+    //exit 0;
 
     return ptr;
-//  return 0;
+    //  return 0;
 }
 
 
@@ -67,7 +67,7 @@ char *randpop::numberStr(char bol, char *numberStr)
     int y;
     int negOrpos;
 
-//  char numberStr[7];
+    //  char numberStr[7];
 
     x = (rand() % 6); // makes 0 to 5
     if (x < 2) {
@@ -122,7 +122,7 @@ char *randpop::numberStr(char bol, char *numberStr)
             y--;
         }
         strcat(numberStr, floats);  // and cat the number
-//    strcat(numberStr, " ");  // and cat a space at the end
+        //    strcat(numberStr, " ");  // and cat a space at the end
     }
     return numberStr;
 }

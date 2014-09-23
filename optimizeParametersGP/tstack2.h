@@ -41,8 +41,8 @@ template< class T > Tstack2< T >::Tstack2(int s) {
     top = -1;
     if (!(contents = new T[size])) {
         //gotoxy(1, 19); // DOS only
-//    move(1, 19); // Unix
-//    printf(" Out of memory for stack\n");
+        //    move(1, 19); // Unix
+        //    printf(" Out of memory for stack\n");
         std::cout << "\nOut of memory for stack";
         //status = 1; // 1 if out of mem
     }
