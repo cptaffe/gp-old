@@ -1,0 +1,2 @@
+./baselineTesting.compute-1-31.log:ERROR return 143 compute-1-31 X^4-2X^3+3X^2+2X-3
+./baselineTesting.compute-1-9.log:ERROR return 143 compute-1-9 2X^3+3X^2+2X+5

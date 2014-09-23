@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+#   Request X processors on Y nodes 
+#PBS -l nodes=1:ppn=8
+#
+#   Request X:00:00 hours of walltime
+#PBS -l walltime=240:00:00
+####PBS -l walltime=HH:MM:SS
+#
+#   Request X gigabyte of memory per process
+#PBS -l pmem=1500M
+#
+#
+#PBS -N optimize_gp
+### Put error in error file and output in out file
+#PBS -e /home/phwilliams/optimizeParametersGP/gp_onCluster.err
+#PBS -o /home/phwilliams/optimizeParametersGP/gp_onCluster.log
+
+
+cd $PBS_O_WORKDIR
+
+START=$(date +"%s")
+echo start time $START
+
+echo "Job started on `hostname` at `date`"
+
+echo $PBS_JOBID >> optimize_gp.jobID.lst
+
+#[ -d /scratch_local/phwilliams/gp ] || mkdir -p /scratch_local/phwilliams/gp
+
+NODE=$(hostname -s) 
+./optimizeParametersSearchSpace.sh $NODE > optimizeTesting.$NODE.log
+
+#cp /scratch_local/phwilliams/gp/*.seedSource.pop.log $PBS_O_WORKDIR
+#sleep 60
+
+#exit
+
+#mv /scratch_local/phwilliams/mRNA/reverse_complement_Homo_sapiens.mRNA.16700.pslx ./humanOnly/mRNA/mRNA.randPicks.sections/reverse_complement_Homo_sapiens.mRNA.16700.pslx
+
+echo " "
+echo "Job Ended at `date`"
+echo " "
+
+END=$(date +"%s")
+echo end time $END
+
+DELTA=$((END - START)) 
+
+echo delta time $DELTA
+
+echo "============ done ================"
+

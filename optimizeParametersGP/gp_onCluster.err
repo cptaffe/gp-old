@@ -1,0 +1,6 @@
+rm: cannot remove `compute-1-10.3X^2+2X-3.data': No such file or directory
+rm: cannot remove `compute-1-10.X^3+X^2+X+5.data': No such file or directory
+rm: cannot remove `compute-1-10.2X^3+3X^2+2X+5.data': No such file or directory
+rm: cannot remove `compute-1-10.X^4-X^3+X^2+X-3.data': No such file or directory
+rm: cannot remove `compute-1-10.X^4-2X^3+3X^2+2X-3.data': No such file or directory
+./optimizeParametersSearchSpace.sh: line 24:  4116 Terminated              ./buildNewRandSetAndRunReturnSuccessOrNot.sh $NODE $QFILE

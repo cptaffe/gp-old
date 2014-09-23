@@ -1,0 +1,19 @@
+0
+40344.argon.host.ualr.edu
+1
+40345.argon.host.ualr.edu
+2
+40346.argon.host.ualr.edu
+3
+40347.argon.host.ualr.edu
+4
+40348.argon.host.ualr.edu
+5
+40349.argon.host.ualr.edu
+6
+40350.argon.host.ualr.edu
+7
+40351.argon.host.ualr.edu
+8
+40352.argon.host.ualr.edu
+/home/phwilliams/optimizeParametersGP/launchOnArgonNodesByCron.sh done

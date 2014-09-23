@@ -1,0 +1,4 @@
+./baselineTesting.compute-1-19.log:exit status of 143 ERROR
+./baselineTesting.compute-1-23.log:exit status of 143 ERROR
+./baselineTesting.compute-1-25.log:ERROR return 143 compute-1-25 2X^3+3X^2+2X+5
+./baselineTesting.compute-1-27.log:ERROR return 143 compute-1-27 2X^3+3X^2+2X+5

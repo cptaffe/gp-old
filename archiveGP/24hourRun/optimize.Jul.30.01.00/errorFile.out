@@ -1,0 +1,4 @@
+./optimizeTesting.compute-1-15.log:ERROR return 143 compute-1-15 2X^3+3X^2+2X+5
+./optimizeTesting.compute-1-18.log:ERROR return 143 compute-1-18 X^3+X^2+X+5
+./optimizeTesting.compute-1-22.log:exit status of 143 ERROR
+./optimizeTesting.compute-1-23.log:ERROR return 143 compute-1-23 X^4-X^3+X^2+X-3

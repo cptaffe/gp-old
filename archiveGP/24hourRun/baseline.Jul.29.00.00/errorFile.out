@@ -1,0 +1,2 @@
+./baselineTesting.compute-1-11.log:ERROR return 143 compute-1-11 2X^3+3X^2+2X+5
+./baselineTesting.compute-1-13.log:exit status of 143 ERROR

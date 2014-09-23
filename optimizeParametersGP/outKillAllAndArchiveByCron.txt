@@ -1,0 +1,2 @@
+date string Mon Sep 15 01:00:01 CDT 2014
+date string Sep.15.01.00
