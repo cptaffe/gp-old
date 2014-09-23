@@ -43,9 +43,7 @@ char *randpop::operators(char *ptr)
     //   ptr = array;
     //  printf("ptr->%c<-\n",array[0]);
     //  printf("ptr->%s<-\n",ptr);
-
     //exit 0;
-
     return ptr;
     //  return 0;
 }
@@ -66,13 +64,10 @@ char *randpop::numberStr(char bol, char *numberStr)
     char floats[5];
     int y;
     int negOrpos;
-
     //  char numberStr[7];
-
     x = (rand() % 6); // makes 0 to 5
     if (x < 2) {
         if (bol == 'n') k = (rand() % 4); // makes 0 to 3
-
         if (k < 2 && bol == 'n') {
             negOrpos = rand() % 2; // two choices  0 or 1
             if (negOrpos == 0) strcpy(numberStr, " k");
@@ -91,7 +86,6 @@ char *randpop::numberStr(char bol, char *numberStr)
         //number = .001;
         if (number == 0)          // float 0 ?
             number = .0001;
-
         //floats = fcvt(number, ndig, &dec, &sign);
         floatNum = fcvt(number, ndig, &dec, &sign);
         strcpy(floats, floatNum);
@@ -105,7 +99,6 @@ char *randpop::numberStr(char bol, char *numberStr)
             dec++;
         }
         zeros[i] = 0; // end with nul
-
         numberStr[0] = 0;        // set string to nul
         negOrpos = rand() % 2; // two choices  0 or 1
         if (negOrpos == 0) {

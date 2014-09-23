@@ -48,11 +48,13 @@ using namespace std;
 void gp_srand(unsigned long long seed);
 unsigned long long gp_rand(void);
 
-long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize, char *argv[]);
+long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize,
+                    char *argv[]);
 //int calcfit(char expresion[], char *argv[], int scaleFit);
 int calcfit(char expresion[], char *argv[]);
 
-void switchCase(char expresion[], int &i, int x, long double k, int &divBy0, int &overSize, char *argv[]);
+void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
+                int &overSize, char *argv[]);
 
 void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend);
 void getIndexLeafOnly(char stopChar, char *Astring, int &Aplace, int &Aend);
@@ -99,7 +101,8 @@ XYclass arrayXY;  // data type array for X & Y data from question file
 //template long double Tstack2<number> num(stack_size);  //  the operands (numbers) stack of default size
 //template char Tstack2<charx> op(stack_size);         //  the operators stack + - / *
 
-Tstack2<long double> num(stack_size);  //  the operands (numbers) stack of default size
+Tstack2<long double> num(
+    stack_size);  //  the operands (numbers) stack of default size
 Tstack2<char> op(stack_size);         //  the operators stack + - / *
 
 struct ptr_struct {
@@ -123,7 +126,6 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
     //  char intronArray[100];
     //  char cmdStr[70];
     //  char *questionFile;
-
     printf("%s",c);  // unix used as clear
     /*    Syntax
           argv[0] the executable file name
@@ -169,20 +171,20 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
         cout << "\n\n";
         exit(9);
     }
-
     char cmdStr[70];
     int gDiff, exitVal;
     int deltaPunkInk;
     int index = 0;
     int *gDiffArray;
-    int minPopSize, maxPopSize, exitMultValue, founderMinFitness, intronProb, genejumpProb, ratioOfXoverMainadf;
-    int minKeepFitness, pickForInsertionProb, pickForSelfCrossProb, pickForSpliceOutGeneProb;
+    int minPopSize, maxPopSize, exitMultValue, founderMinFitness, intronProb,
+        genejumpProb, ratioOfXoverMainadf;
+    int minKeepFitness, pickForInsertionProb, pickForSelfCrossProb,
+        pickForSpliceOutGeneProb;
     //  int maxChroLen,
     int minGeneSizeOut, maxGeneSizeOut;
     //  float threshold, thresholdDiviser, multByNewSize;
     float multByNewSize;
     char *endptr; // for strtod
-
     maxPopSize = atoi(argv[2]);
     //  randpopsize = atoi(argv[3]);
     //  threshold = atoi(argv[4]);
@@ -206,12 +208,10 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
     maxGeneSizeOut = atoi(argv[22]);
     //argv[23] [CPUx] name of CPU or node running on used as stem
     //argv[24] Question file example [3X^2+2X-3.dat]
-
     /* This is needed to avoid an infinite loop. */
     if (maxPopSize < minPopSize) {
         maxPopSize = minPopSize;
     }
-
     if (!(gDiffArray = new int[gDiff])) {
         cout << "ERROR\n";
         exit(9);
@@ -220,21 +220,15 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
     // gDiffArray[j] = 200;
     //cout << gDiffArray[j] << ",";
     //}
-
     //return 1;
-
     //  loadxy();  // load the x & y from file to array
     loadxy(argv[24]);  // load the x & y from file to arraya
     //  cout << "\n\n" << questionFile << " " argv[14] << "\n";
     //  cout << "\n" << argv[17] << "\n";
     //exit(1);
-
     gp_srand( (unsigned)time(NULL) ); // seed the rand
-
     cout.setf(ios::right,ios::adjustfield);
-
     cmdStr[0] = 0;
-
     strcpy(cmdStr, "./seedPopRand.pl "); // building string from parts
     strcat(cmdStr, argv[23]); // the stem name for the rand pop file
     strcat(cmdStr, "."); // building string from parts
@@ -242,7 +236,6 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
     strcat(cmdStr, argv[3]); // randpopsize
     strcat(cmdStr, " ");
     strcat(cmdStr, argv[23]); // the stem name for the rand pop file
-
     //cout << cmdStr << "\n";
     //exit(1);
     /* While the fitness is less than the minimum founder fitness, continue with first_run function,
@@ -250,7 +243,8 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
      */
     //  while (highFitness < atoi(argv[8]) && size < atoi(argv[11])) {  //argv[x] = min fit to go
     j = 0;
-    while (highFitness < founderMinFitness && size < minPopSize) {  //argv[x] = min fit to go
+    while (highFitness < founderMinFitness &&
+            size < minPopSize) {  //argv[x] = min fit to go
         //    while (pop.length()/2 > atoi(argv[2]))  kill(argv);
         while (pop.length() > maxPopSize) kill(argv);
         exitVal = system(cmdStr);  // run command string in loop
@@ -268,10 +262,8 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
             exit(0);
         }
     }
-
     //exit(1);
     //cout << "after first run and gp_srand" << endl;
-
     while (g < atoi(argv[1])) { // argv[1] = number of generations
         g++;      // increment generation count
         //    cout << setw(4) << g << "\r";
@@ -285,20 +277,15 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
         }
         //    cout << endl << "Size of population " << setw(4) << newSize << endl;
         //    cout << "\n" << "multByNewSize " << multByNewSize << "\n";
-
         //exit(1);
-
         size = 0;
-
         for (j = 0; j <= newSize * multByNewSize; j++) {
             if (gp_rand() % pickForInsertionProb == 0) {
                 pickForInsertion(argv);
             }
-
             if (gp_rand() % genejumpProb == 0) {
                 pickForGenejump(argv);
             }
-
             if (gp_rand() % pickForSelfCrossProb == 0) {
                 pickForSelfCross(ratioOfXoverMainadf, argv);
             }
@@ -309,15 +296,14 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
                 pickForSpliceOutGene(minGeneSizeOut, maxGeneSizeOut, argv);
             }
         } // end for
-
         if ((highFitness * exitMultValue) <= g) {
             printf("\nLow fitness of %d for generation %d\n",highFitness,g);
-            printf("          %d * %d = %d\n", highFitness, exitMultValue, highFitness * exitMultValue);
+            printf("          %d * %d = %d\n", highFitness, exitMultValue,
+                   highFitness * exitMultValue);
             writeOut(argv); // dump data to file
             exitOut(argv, highFitness);
             return 0;
         }
-
         if (index < gDiff) {
             gDiffArray[index] = highFitness;
             //printf("\nload gDiffArray index = %d with %d\n",index, gDiffArray[index]);
@@ -325,7 +311,8 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
         }
         else {
             if (highFitness - gDiffArray[0] < deltaPunkInk) {
-                printf("\nLow level of punctuated equilibrium for generation %d\n%d = %d - %d\n",g,highFitness - gDiffArray[0],highFitness,gDiffArray[0]);
+                printf("\nLow level of punctuated equilibrium for generation %d\n%d = %d - %d\n",
+                       g,highFitness - gDiffArray[0],highFitness,gDiffArray[0]);
                 //        for (j = 0; j < gDiff; j++) {
                 //          cout << gDiffArray[j] << ",";
                 //        }
@@ -341,9 +328,7 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
             }
             gDiffArray[gDiff -1] = highFitness;
         }
-
     }
-
     writeOut(argv); // dump data to file
     exitOut(argv, highFitness);
     cout << "\nExit program pw\n";
@@ -363,16 +348,12 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[])
     char same = 't'; // track if same substrings
     char firstXover[Max_Str_size];
     char secondXover[Max_Str_size];
-
     //cout << "\n->" << Astring << "<-Astring,selfCross\n";
-
     stopChar = '@';  // start at 0 and end at '@'or
     if (gp_rand() % ratioOfXoverMainadf == 0 ) {
         stopChar = 0; // start at @ to end of string
     }
-
     //cout << "start crossover " << argv[10] << endl;
-
     index = 0; // use index as a counter for now
     while (same == 't') {
         //cout << " index " << index << endl;
@@ -394,13 +375,11 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[])
         if (Aplace == Aend || Bplace == Bend || Aplace == 0 || Bplace == 0) same = 't';
         else same = 'f';
     }
-
     x = 0; // x is the positional index for the strArray string
     while (x < Aplace) {   // load the Ahead into strArray
         firstXover[x] = Astring[x];
         x++;
     }
-
     /*
       if (firstXover[x -1] != ')' || firstXover[x -1] != ' ') {
         firstXover[x] = ' ';
@@ -413,7 +392,6 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[])
         index++;
         x++;
     }
-
     index = Aend;
     while (Astring[index] != 0) {
         firstXover[x] = Astring[index];
@@ -421,30 +399,25 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[])
         index++;
     }
     firstXover[x] = 0; // end with null
-
     //cout << "\n->" << firstXover << "<-firstXover,selfCross\n";
     //  calcfit(firstXover, argv, scaleFitness);
     calcfit(firstXover, argv);
     //cout << "after calcfit 1" << endl;
-
     x = 0; // x is the positional index for the string
     while (x < Bplace) {   // load the Bhead into strArray
         secondXover[x] = Astring[x];
         x++;
     }
-
     if (secondXover[x -1] != ')') {
         secondXover[x] = ' ';
         x++;
     }
-
     index = Aplace;
     while (index < Aend) {  // load the Amiddle
         secondXover[x] = Astring[index];
         index++;
         x++;
     }
-
     index = Bend;
     while (Astring[index] != 0) {
         secondXover[x] = Astring[index];
@@ -452,13 +425,11 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[])
         index++;
     }
     secondXover[x] = 0; // end with null
-
     //cout << "\n->" << secondXover << "<-secondXover,selfCross\n";
     //cout << "before calcfit 2" << endl;
     //  calcfit(secondXover, argv, scaleFitness);
     calcfit(secondXover, argv);
     //cout << "after calcfit 2" << endl;
-
     return;
 }
 //-------------------------------------------------------------
@@ -470,22 +441,15 @@ void buildIntron(char *arrayIn)
     const char subtractZero[] = "\(+ (-";
     char leafStr[8];
     //  int x;
-
     leafStr[0] = 0;
     strcat(leafStr, arrayIn);
-
     arrayIn[0] = 0;
-
     zero_or_one = gp_rand() % 2; // two choices  0 or 1
-
     if (zero_or_one == 0) strcat(arrayIn, multByOne);
     else strcat(arrayIn, subtractZero);
-
     strcat(arrayIn, leafStr);
     strcat(arrayIn, leafStr);
-
     //  cout << " Intron " << "\n" << arrayIn << "\n";
-
     return;
 }
 //-------------------------------------------------------------
@@ -500,9 +464,7 @@ void getIndexLeafOnly(char stopChar, char *Astring, int &Aplace, int &Aend)
     int count;
     int Astart;
     char *ptr;  // pointer to the start of the string
-
     //cout << "getindex" << endl;
-
     if (stopChar == '@') {
         Astart = 0;          // cross the main function
     }
@@ -510,22 +472,21 @@ void getIndexLeafOnly(char stopChar, char *Astring, int &Aplace, int &Aend)
         ptr = strchr(Astring,'@'); // user strchr to find the @
         Astart = ptr-Astring; // start is position of @ +1
     }
-
     Aplace = Astart; // here Aplace is an index
     while (Astring[Aplace] != stopChar) { // till at stopChar
-        if (Astring[Aplace] == '.' || Astring[Aplace] == 'X' || Astring[Aplace] == 'k') {
+        if (Astring[Aplace] == '.' || Astring[Aplace] == 'X' ||
+                Astring[Aplace] == 'k') {
             leafCountA++;  // count number of leaves in string
         }
         Aplace++;    // move and test the next char
     }
-
     randA = (gp_rand() % leafCountA +1);
-
     Aplace = Astart; // here Aplace becomes the position
     count = 0;
     while (count < randA) {
         Aplace++;
-        if (Astring[Aplace] == '.' || Astring[Aplace] == 'X' || Astring[Aplace] == 'k') {
+        if (Astring[Aplace] == '.' || Astring[Aplace] == 'X' ||
+                Astring[Aplace] == 'k') {
             count++;  // count the leaves till = randA
         }
     }
@@ -534,7 +495,8 @@ void getIndexLeafOnly(char stopChar, char *Astring, int &Aplace, int &Aend)
         Aplace--; // if negative backup one
     }
     Aend = Aplace;
-    while (Astring[Aend] != ')' && Astring[Aend] != ' ' && Astring[Aend] != '(' && Astring[Aend] != stopChar && Astring[Aend] != 0) {
+    while (Astring[Aend] != ')' && Astring[Aend] != ' ' && Astring[Aend] != '(' &&
+            Astring[Aend] != stopChar && Astring[Aend] != 0) {
         Aend++;  // Aend is now the position for end of leaf
     }
     Aplace--; // and backup one to pickup space on front end
@@ -561,19 +523,15 @@ void insertExoGene(char Astring[], char transposIn[], int flip, char *argv[])
     char charArray[Max_Str_size];
     // Save the leaf here to make into an intron
     const char paren[] = ")";
-
     if (flip == 0) {
         stopChar = '@';  // start at 0 and end at '@'or
     }
     else {
         stopChar = '\0'; // start at @ to end of string
     }
-
     //cout << "Astring\n->" << Astring << "<-\n";
-
     getIndexLeafOnly(stopChar, Astring, Aplace, Aend);
     // For the Astring find some leaf node to add to
-
     x = 0;
     y = Aplace;
     //cout << "Aend " << Aend << "\n";
@@ -584,7 +542,6 @@ void insertExoGene(char Astring[], char transposIn[], int flip, char *argv[])
         y++;
     }
     leafArray[x] = 0;
-
     //cout << "\n->" << leafArray << "<-\n";
     //cout << "\n->" << transposIn << "<-\n";
     //  leafLen = strlen(leafArray);
@@ -592,13 +549,11 @@ void insertExoGene(char Astring[], char transposIn[], int flip, char *argv[])
     //  strcat(DynArray1, leafArray);
     buildIntron(leafArray);
     // The leaf array now contains the leaf built into an intron
-
     //cout << "\n->" << leafArray << "<-\n";
     // intron now in
     //  cout << " Intron " << "\n" << DynArray1 << "\n";
     //  cout << " exoGen " << "\n" << Bstring << "\n";
     //  delete DynArray1;
-
     // Copy the head to the tmp array
     //  tmpArray[0] = 0;
     x = 0;
@@ -620,7 +575,6 @@ void insertExoGene(char Astring[], char transposIn[], int flip, char *argv[])
     strcat(tmpArray, paren);
     //  tmpArray[strlen(tmpArray) +1] = ')';
     //  tmpArray[strlen(tmpArray) +2] = 0;
-
     // memcpy( subbuff, &buff[10], 4 );
     // Copy the tail
     x = 0;
@@ -632,18 +586,14 @@ void insertExoGene(char Astring[], char transposIn[], int flip, char *argv[])
         y++;
     }
     charArray[x] = 0;
-
     // Copy the tail
     strcat(tmpArray, charArray);
     //cout << "tmpArray:\n->" << tmpArray << "<-\n";
     //cout << "charArray:\n->" << charArray << "<-\n";
-
     transposIn[0] = 0; // clear array
     strcpy(transposIn, tmpArray);
     //cout << "transposIn:\n->" << transposIn << "<-\n";
-
     //exit(1);
-
     return;
 }
 //-------------------------------------------------------------
@@ -653,25 +603,19 @@ void makeExoGene(char *DynArrayTranspIn, int flip, char *argv[])
 {
     char expresion[ARRAYSIZE];
     char opArray[2];
-
     // Find out if the main has any ADF
     //  pc = strchr(Astring, 'F');
     // If it has an ADF then flip to see if we work the main or the ADF
     // If no ADF then only work the main
-
     //  cout < "pointer pc " << pc << "\n";
-
     expresion[0] = 0;
     if (flip == 0) {
         // build main random exogenous gene
         buildString('r','y');
         strcat(expresion, ArrayRight);
     }
-
     //===============================================================
-
     else {
-
         //  strcat(expresionADF, "("); // start out with open "("
         //  p.operators(opArray); // add the op
         //  strcat(expresionADF, opArray); // add the op
@@ -682,11 +626,8 @@ void makeExoGene(char *DynArrayTranspIn, int flip, char *argv[])
         //  strcat(expresionADF, ")"); // end with close )
     }
     //printf("\n->%s<-\n", expresion);
-
     strcpy(DynArrayTranspIn, expresion);
-
     // test for fitness
-
     return;
 }
 
@@ -702,28 +643,22 @@ int pickForSpliceOutGene(int minGeneSizeOut, int maxGeneSizeOut, char *argv[])
     char strArray[Max_Str_size];
     char *pc;
     int flip = 0;
-
     maxSpiner = pop.getMaxSpin(); // spiner loaded here
     spin_1 = (gp_rand() % (maxSpiner -1)) +1;
     strptr = pop.SpinString(spin_1);
     strcpy(strArray, strptr); // copy the string so the pointer can be removed
     strptr = 0; //null the pointer for the kill
-
     //  if (!(gDiffArray = new int[gDiff])) {
     //    cout << "ERROR\n";
     //    exit(9);
     //  }
-
-
     //  while (!(DynArrayPick = new char[strlen(strArray)+1])) kill(argv);
     if (!(DynArrayPick = new char[strlen(strArray)+1])) {
         cout << "ERROR out of RAM\n";
         exit(9);
     }
     strcpy(DynArrayPick, strArray);
-
     spliceOutGene(DynArrayPick, minGeneSizeOut, maxGeneSizeOut,argv);
-
     delete DynArrayPick;
 }
 //-------------------------------------------------------------
@@ -737,7 +672,6 @@ int pickForIntrons(char *argv[])
     char strArray[Max_Str_size];
     char *pc;
     int flip = 0;
-
     maxSpiner = pop.getMaxSpin(); // spiner loaded here
     spin_1 = (gp_rand() % (maxSpiner -1)) +1;
     strptr = pop.SpinString(spin_1);
@@ -749,9 +683,7 @@ int pickForIntrons(char *argv[])
         exit(9);
     }
     strcpy(DynArrayPick, strArray);
-
     introns(DynArrayPick, argv);
-
     delete DynArrayPick;
 }
 //-------------------------------------------------------------
@@ -766,7 +698,6 @@ int pickForSelfCross(int ratioOfXoverMainadf, char *argv[])
     char strArray[Max_Str_size];
     char *pc;
     int flip = 0;
-
     maxSpiner = pop.getMaxSpin(); // spiner loaded here
     spin_1 = (gp_rand() % (maxSpiner -1)) +1;
     strptr = pop.SpinString(spin_1);
@@ -777,13 +708,9 @@ int pickForSelfCross(int ratioOfXoverMainadf, char *argv[])
         cout << "ERROR out of RAM\n";
         exit(9);
     }
-
     strcpy(DynArrayPick, strArray);
-
     selfCross(DynArrayPick, ratioOfXoverMainadf, argv);
-
     //cout << "\n->" << DynArrayPick << "<-\n";
-
     delete DynArrayPick;
 }
 //-------------------------------------------------------------
@@ -798,7 +725,6 @@ int pickForGenejump(char *argv[])
     char strArray[Max_Str_size];
     char *pc;
     int flip = 0;
-
     maxSpiner = pop.getMaxSpin(); // spiner loaded here
     spin_1 = (gp_rand() % (maxSpiner -1)) +1;
     strptr = pop.SpinString(spin_1);
@@ -809,12 +735,9 @@ int pickForGenejump(char *argv[])
         cout << "ERROR out of RAM\n";
         exit(9);
     }
-
     strcpy(DynArrayPick, strArray);
-
     //cout << "\n->" << DynArrayPick << "<-\n";
     geneJump(DynArrayPick, argv);
-
     delete DynArrayPick;
 }
 //-------------------------------------------------------------
@@ -828,7 +751,6 @@ int pickForInsertion(char *argv[])
     char strArray[Max_Str_size];
     char *pc;
     int flip = 0;
-
     maxSpiner = pop.getMaxSpin(); // spiner loaded here
     spin_1 = (gp_rand() % (maxSpiner -1)) +1;
     strptr = pop.SpinString(spin_1);
@@ -839,11 +761,8 @@ int pickForInsertion(char *argv[])
         cout << "ERROR out of RAM\n";
         exit(9);
     }
-
     strcpy(DynArrayPick, strArray);
-
     pc = strchr(DynArrayPick, 'F');
-
     if (pc) {
         flip = gp_rand() % 2; // two choices  0 or 1
     }
@@ -852,50 +771,38 @@ int pickForInsertion(char *argv[])
     }
     //	  geneJump(DynArray1, argv);
     //printf("\n->%d<-\n", flip);
-
     //  cout << DynArrayPick << "\n";
-
     // Find out if the main has any ADF
     //  *pc = strchr(DynArray1, 'F');
     // If it has an ADF then flip to see if we work the main or the ADF
     // If no ADF then only work the main
-
     //  while (!(DynArrayTransp = new char[Max_Str_size])) kill(argv);
     if (!(DynArrayTransp = new char[Max_Str_size])) {
         cout << "ERROR out of RAM\n";
         exit(9);
     }
-
     //            is the Astring, is new array ready for building
     makeExoGene(DynArrayTransp, flip, argv);
     //  cout << DynArrayTransp << "\n";
     //insertExoGene(char Astring[], char Bstring[], int flip, char *argv[])
     insertExoGene(DynArrayPick, DynArrayTransp, flip, argv);
     //  cout << DynArrayTransp << "\n";
-
     //calcfit(DynArrayTransp, argv, scaleFitness);
     calcfit(DynArrayTransp, argv);
     //      cout << "\nout of function calcfit\n";
-
-
     // 1 ) takes an array holding the leaf from the Astring
     // 2 )  replaces the leaf with the transposon plus leaf within the intron
-
     delete DynArrayTransp; // recoop the mem
     delete DynArrayPick; // recoop the mem
-
     //exit(1);
-
     return 0;
 }
 //-------------------------------------------------------------
 void loadxy(char *questionData)
 {
-
     FILE *XYfile;
     int i;
     char temp[100];
-
     //   if ((XYfile = fopen("question.dat", "r" )) == NULL) {
     if ((XYfile = fopen(questionData, "r" )) == NULL) {
         cout <<" File question.dat could not be opened";
@@ -931,17 +838,12 @@ void first_run(char *argv[])
     char *F;
     char *atptr;
     char cmdStr[60];
-
     cmdStr[0] = 0;
-
     strcpy(cmdStr, argv[23]); //argv[15] node name stem
     strcat(cmdStr, ".pop.dat");
     //cout << endl<< cmdStr << endl;
     //   cout << endl;
-
     //exit(1);
-
-
     //   if ((file_in = fopen("DualCore.pop.dat", "r" )) == NULL) {
     if ((file_in = fopen(cmdStr, "r" )) == NULL) {
         cout <<" File " << cmdStr << " could not be opened\n";
@@ -957,7 +859,6 @@ void first_run(char *argv[])
                 fscanf(file_in, "%c", &char1);
             } // end while char1
             line[x] = '\0';          // add null to end the array
-
             //cout << count << ' ' << line << endl;
             if (strlen(line) != 0)
                 //calcfit(line, argv, scaleFitness);
@@ -986,26 +887,19 @@ int calcfit(char expresion[], char *argv[])
     int minKeepFit = 0;
     int overSize = 0;
     float threshold, thresholdDiviser;
-
     maxChroLen = atoi(argv[19]);
     threshold = strtod(argv[4], &endptr);
     thresholdDiviser = strtod(argv[5], &endptr);
     minKeepFitness = atoi(argv[12]);
-
     //cout << "\n->"<< expresion << "<-\n";
-
-
-
     if (strlen(expresion) > maxChroLen) {
         //  if (strlen(expresion) > ) {
         //cout << endl << atoi(argv[18]) << "\n" << atoi(argv[19])<< "\n" << expresion << endl;
         //    exit(1);
         return 1;
     }
-
     fit = 0;
     //cout << " start calcfit\n";
-
     if (g == 0) {
         tite = strtod(argv[4], &endptr);
         minKeepFit = 0;
@@ -1020,13 +914,9 @@ int calcfit(char expresion[], char *argv[])
             minKeepFit = minKeepFitness;
         }
     }
-
     //cout << endl << "tite = " << tite << endl << "argv[5] = " << argv[5] << endl << "argv[6] = " << argv[6] << endl;
-
     //cout << endl << "argf5 = " << argf5 << endl << "argf6 = " << argf6 << endl;
-
     //cout << endl << endl << expresion << endl;
-
     for (x = 0; x < fitSize; x++) {  // for loop to change x and y and test them
         //i = 1; // start at one because only ( or space at index zero
         i = 0;
@@ -1042,16 +932,13 @@ int calcfit(char expresion[], char *argv[])
         }
         if (divBy0 == 1) fit--;
         if (overSize == 1) fit--;
-
         num.pop(temp1);   // pop the answer
         if (num.isEmpty() != 1 || op.isEmpty() != 1) {
             error(" Main Stacks not empty", argv);
         }       // if tite is large then the delta can be large
         if (fabs(arrayXY.getY(x) - temp1) <= tite) fit++;
     }
-
     //  cout << "\r" << setw(4) << g << "            " << setw(5) << size << "            " << setw(4) << highFitness << " ";
-
     if (fit >= minKeepFit) {
         if (fit <= scaleFitness) {
             fit = 1;
@@ -1061,16 +948,13 @@ int calcfit(char expresion[], char *argv[])
             kill(argv);
             testadd = pop.add(expresion, fit);
         }
-
         if (fit > highFitness) {
             //      cout << "\r" << setw(4) << g << "            " << setw(5) << size << "            " << setw(4) << highFitness << " \n";
             highFitness = fit;  // set the global fitness
             //graphOutput(current-start, g, highFitness, expresion);
         }
-
         size++;
         //    printf("%s",c);  // unix used as clear
-
         if (fit == fitSize) { // found it
             cout << "*****  Found Approxamate Solution  *****" << "\n\n";
             cout << ' ' << expresion << "\n";
@@ -1079,7 +963,6 @@ int calcfit(char expresion[], char *argv[])
             exitOut(argv, fit);
             exit(1);
         }
-
     }
     //cout << " end calcfit\n";
     return 0;
@@ -1091,14 +974,11 @@ void geneJump(char *strIn, char *argv[])
 {
     char *strOut;
     int x, y;
-
     //cout << "\nrun geneJump\n";
     strOut = strchr(strIn,'F'); // test for F in string
     if (strOut) return; // if has F then return
-
     strOut = strchr(strIn,'k'); // test for k in string
     if (strOut) return; // if has k then return
-
     if (!(strOut = new char[strlen(strIn)+1])) {
         //    printf("Insufficient RAM for Gene Jump Data");
         cout << "ERROR out of RAM\n";
@@ -1116,7 +996,6 @@ void geneJump(char *strIn, char *argv[])
     } // last half now first
     strOut[y] = '@'; // put in @
     y++; // and move up
-
     x = 0;
     while (strIn[x] != '@') { // copy from start to @ of string
         strOut[y] = strIn[x];
@@ -1126,7 +1005,6 @@ void geneJump(char *strIn, char *argv[])
     strOut[y] = 0; // end with nul
     //cout << endl << strOut << endl;
     //while (!kbhit()) {}
-
     //cout << "\n->" << strOut << "<-\n" << endl;
     //  calcfit(strOut, argv, scaleFitness);
     calcfit(strOut, argv);
@@ -1136,7 +1014,8 @@ void geneJump(char *strIn, char *argv[])
 
 //-------------------------------------------------------------
 //-------------------------------------------------------------
-void spliceOutGene(char *strPtr, int minGeneSizeOut, int maxGeneSizeOut, char *argv[])  //
+void spliceOutGene(char *strPtr, int minGeneSizeOut, int maxGeneSizeOut,
+                   char *argv[])  //
 {
     int zero_or_one;
     int place = 0;
@@ -1149,7 +1028,6 @@ void spliceOutGene(char *strPtr, int minGeneSizeOut, int maxGeneSizeOut, char *a
     char terminalBranch[Max_Str_size];
     int geneIndex = 0;
     int x,y;
-
     // Pick the main function or the ADF for splicing out a gene segment
     x = 0;
     while ((end - place < minGeneSizeOut) || (end - place > maxGeneSizeOut)) {
@@ -1160,10 +1038,8 @@ void spliceOutGene(char *strPtr, int minGeneSizeOut, int maxGeneSizeOut, char *a
         else getIndex('\0', strPtr, place, end);
         // Pick ADF for splicing out a gene segment
     }
-
     // If it starts at the beginning or ends at the end of the string then don't use it just return
     if (place == 0 || place == end) return;
-
     // Build branch gene segment
     x = 0; // x is the positional index
     y = place;
@@ -1173,7 +1049,6 @@ void spliceOutGene(char *strPtr, int minGeneSizeOut, int maxGeneSizeOut, char *a
     }
     terminalBranch[x] = 0;
     //cout << "\n->" << terminalBranch << "<-terminalBranch\n";
-
     //  while (strlen(terminalBranch) -1 == strlen() {
     getIndex('\0', terminalBranch, startSeg, endSeg);
     while (startSeg == 1) {
@@ -1187,7 +1062,6 @@ void spliceOutGene(char *strPtr, int minGeneSizeOut, int maxGeneSizeOut, char *a
     }
     terminalGene[x] = 0;
     //cout << "\n->" << terminalGene << "<-terminalGene\n";
-
     x = 0; // x is the positional index
     while (x < place) {   // load the head into strArray
         strArray[x] = strPtr[x];
@@ -1206,7 +1080,6 @@ void spliceOutGene(char *strPtr, int minGeneSizeOut, int maxGeneSizeOut, char *a
         y++;
     }
     strArray[x] = 0;
-
     //cout << "\n->" << strPtr << "<-original\n";
     //cout << strArray << "<-new\n";
     // From the gene segment to remove get the first terminal gene
@@ -1215,7 +1088,6 @@ void spliceOutGene(char *strPtr, int minGeneSizeOut, int maxGeneSizeOut, char *a
     //cout << "start calcfit\n";
     calcfit(strArray, argv);
     //cout << "\ncalcfit done\n";
-
     return;
 }
 //-------------------------------------------------------------
@@ -1233,15 +1105,11 @@ void introns(char *Astring, char *argv[])  // adds introns to string
     int place = 0;
     int end = 0;
     char strArray[Max_Str_size];
-
     //  cout << " Intron start  " << "\n";
-
     zero_or_one = gp_rand() % 2; // two choices  0 or 1
     if (zero_or_one == 0) getIndex('@', Astring, place, end);
     else getIndex('\0', Astring, place, end);
-
     if (place == 0 || place == end) return;
-
     number = gp_rand() % 10000;
     //  while (number > 1) {
     number = number/10000;
@@ -1249,14 +1117,12 @@ void introns(char *Astring, char *argv[])  // adds introns to string
     //  }
     if (number == 0)          // float 0 ?
         number = .0001;
-
     //floats = fcvt(number, ndig, &dec, &sign);
     floatNum = fcvt(number, ndig, &dec, &sign);
     strcpy(floats, floatNum);
     //  strcpy(floats, " ");
     //printf("\nnumber-> %f dec -> %d floatNum %s\n",number, dec, floatNum);
     //cout << floatNum << "\n";
-
     //floats[++y] = '\0';
     zeros[0] = 0; // clear string
     i = 0;
@@ -1266,7 +1132,6 @@ void introns(char *Astring, char *argv[])  // adds introns to string
         dec++;
     }
     zeros[i] = 0; // end with nul
-
     numberStr[0] = 0;        // set string to nul
     zero_or_one = gp_rand() % 2; // two choices  0 or 1
     if (zero_or_one == 0) {
@@ -1284,7 +1149,6 @@ void introns(char *Astring, char *argv[])  // adds introns to string
     //  strcat(numberStr, " ");  // and cat the space
     numberStr[++x] = '\0';
     zero_or_one = gp_rand() % 2; // two choices  0 or 1 now use for intron type
-
     x = 0; // x is the positional index for the strArray string
     while (x < place) {   // load the head into strArray
         strArray[x] = Astring[x];
@@ -1300,16 +1164,13 @@ void introns(char *Astring, char *argv[])  // adds introns to string
     if (zero_or_one == 0) strArray[x] = '*';
     else strArray[x] = '+';
     x++;
-
     strArray[x] = ' ';  // just a space
     x++;
-
     strArray[x] = '(';  // makes "(
     x++;
     if (zero_or_one == 0) strArray[x] = '/';  // makes "(*(/"
     else strArray[x] = '-';          // else "(+(-"
     x++;
-
     /*  load the number and / part of the intron (? (? .123 .123) */
     i = 0;
     while (numberStr[i] != 0) {  // load the number first time
@@ -1317,7 +1178,6 @@ void introns(char *Astring, char *argv[])  // adds introns to string
         i++;
         x++;
     }
-
     i = 0;
     while (numberStr[i] != 0) {   // load the number last part
         strArray[x] = numberStr[i];
@@ -1326,17 +1186,14 @@ void introns(char *Astring, char *argv[])  // adds introns to string
     }
     strArray[x] = ')'; // close paren ')'
     x++;
-
     count = place; // use count for index
     while (count < end) {  // load the Bmiddle
         strArray[x] = Astring[count];
         count++;
         x++;
     }
-
     strArray[x] = ')'; // close paren ')'
     x++;
-
     /////////////
     count = end; // count can again be used for an index
     while (Astring[count] != 0) {
@@ -1346,14 +1203,11 @@ void introns(char *Astring, char *argv[])  // adds introns to string
     }
     strArray[x] = 0; // end with null
     //cout << strArray;
-
     /* precondition is that current points to this data node */
-
     //cout << "\n->" << strArray << "<-\n" << endl;
     //  calcfit(strArray, argv, scaleFitness);
     calcfit(strArray, argv);
     //cout << "\npast calcfit for intron" << endl;
-
     /* replace old string in current node with longer one */
     //move(1, 4); // blot the exp
     //cout << " Intron  end  ";
@@ -1370,9 +1224,7 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend)
     int count;
     int Astart;
     char *ptr;  // pointer to the start of the string
-
     //cout << "getindex" << endl;
-
     if (stopChar == '@') {
         Astart = 0;          // cross the main function
     }
@@ -1380,7 +1232,6 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend)
         ptr = strchr(Astring,'@'); // user strchr to find the @
         Astart = ptr-Astring; // start is position of @ +1
     }
-
     Aplace = Astart; // here Aplace is an index
     while (Astring[Aplace] != stopChar) { // till at stopChar
         if (Astring[Aplace] == '(') {
@@ -1390,14 +1241,13 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend)
     }
     Aplace = Astart; // here Aplace is an index
     while (Astring[Aplace] != stopChar) { // till at stopChar
-        if (Astring[Aplace] == '.' || Astring[Aplace] == 'X' || Astring[Aplace] == 'k') {
+        if (Astring[Aplace] == '.' || Astring[Aplace] == 'X' ||
+                Astring[Aplace] == 'k') {
             leafCountA++;  // count number of leaves in string
         }
         Aplace++;    // move and test the next char
     }
-
     randA = (gp_rand() % (openParenA+leafCountA) +1);
-
     if (randA <= openParenA) {  // use branch
         Aplace = Astart; // here Aplace becomes the position
         count = 0;
@@ -1443,7 +1293,8 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend)
             Aplace--; // if negative backup one
         }
         Aend = Aplace;
-        while (Astring[Aend] != ')' && Astring[Aend] != ' ' && Astring[Aend] != '(' && Astring[Aend] != stopChar && Astring[Aend] != 0) {
+        while (Astring[Aend] != ')' && Astring[Aend] != ' ' && Astring[Aend] != '(' &&
+                Astring[Aend] != stopChar && Astring[Aend] != 0) {
             Aend++;  // Aend is now the position for end of leaf
         }
         Aplace--; // and backup one to pickup space on front end
@@ -1456,12 +1307,10 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend)
 void kill(char *argv[]) // kill the weekest random 3
 {
     int k,i,j,x;
-
     //pop.sort(); // sort the list high first
     //pop.last();   // set current to first one in list
     //pop.first();   // set current to first one in list
     //pop.remove(); // remove the node that current points to
-
     for (x = 0; x < 3; x++) {
         k = pop.getMin();
         i = pop.getMinCount(k);
@@ -1475,19 +1324,20 @@ void kill(char *argv[]) // kill the weekest random 3
             if (pop.getFit() == k) i = 1;   // getfitness of current node
             else i = 0;
             while (i < j) {
-                if (pop.next() == 1) error("no pop; end of list", argv);  // set current to next one in list
+                if (pop.next() == 1) error("no pop; end of list",
+                                               argv);  // set current to next one in list
                 if (pop.getFit() == k) i++;   // getfitness of current node
             }
             pop.remove(); // remove the node that current points to
         }
     }
-
 }
 
 //-------------------------------------------------------------
 //-------------------------------------------------------------
 
-long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize, char *argv[])
+long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize,
+                    char *argv[])
 //void recalcF(char expresion[], int &i, int x, int &divBy0)
 {   // (* (- X(* X(+ X 0.888)) (+ X F(- X 0.999)))@(- k X)
     // first find the end of the function by counting open and closed
@@ -1500,26 +1350,23 @@ long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize,
     int index;
     int countParen = -1;
     char *F;
-
     //cout << endl << "recalc function" << endl << expresion << endl;
-
     atptr = strchr(expresion,'@'); // set pointer to @
     // next look for the k in the @ string
     kptr = strchr(atptr,'k');
     F = strchr(atptr,'F');
-
     if (F) {
         cout << "\n" << atptr << "\n";
         exit(9);
     }
-
     i++; // first move past the F
     i++; // then past the (
     while (countParen < 0) {
         if (expresion[i] == '(') countParen--;
         if (expresion[i] == ')') countParen++;
         if (kptr) { // if it has k then calc F(.....) else just run it up
-            switchCase(expresion, i, x, temp1, divBy0, overSize, argv); // x is the index for x
+            switchCase(expresion, i, x, temp1, divBy0, overSize,
+                       argv); // x is the index for x
         }
         else i++; // ignore F(....) just index past
     }
@@ -1533,7 +1380,8 @@ long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize,
     }
     while (atptr[index] != 0) { //till end of string
         // temp1 is sent as k value
-        switchCase(atptr, index, x, temp1, divBy0, overSize, argv); // x is the index for x
+        switchCase(atptr, index, x, temp1, divBy0, overSize,
+                   argv); // x is the index for x
     }
     // send the answer as k
     // can it be used in a recursion ?
@@ -1542,12 +1390,12 @@ long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize,
     //  num.pop<long double>(temp1);   // pop the answer
     //  num.pop<double>(temp1);   // pop the answer
     num.pop(temp1);   // pop the answer
-
     return temp1;
 }
 //-------------------------------------------------------------
 
-void switchCase(char expresion[], int &i, int x, long double k, int &divBy0, int &overSize, char *argv[])
+void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
+                int &overSize, char *argv[])
 {
     long double temp1;
     long double temp2;
@@ -1558,20 +1406,16 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0, int
     int j;
     int tooLarge = 10000000;
     double tooSmall = 0.0000001;
-
-
     //cout << "->" << expresion << "<-\n";
     //cout << " start sub\n";
-
-
     switch(expresion[i]) {
     case 'F':
-        if (num.push(recalcF(expresion, i, x, divBy0, overSize, argv))) {} // the value is now in the stack
+        if (num.push(recalcF(expresion, i, x, divBy0, overSize,
+                             argv))) {} // the value is now in the stack
         else {
             error("expresion F num Stack full", argv);
         }
         break;
-
     case '+':
     case '*':
     case '/':
@@ -1598,7 +1442,8 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0, int
             if (expresion[i] == '.') { // if number
             case '.':
                 j = 0;
-                while (expresion[i] != ' ' && expresion[i] != ')' && expresion[i] != '@' && expresion[i] != 0) {
+                while (expresion[i] != ' ' && expresion[i] != ')' && expresion[i] != '@' &&
+                        expresion[i] != 0) {
                     float_str[j] = expresion[i];
                     i++;
                     j++;
@@ -1626,7 +1471,6 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0, int
                 }
                 i++; // past the X or F or k
                 sign = 1;   // reset used or not
-
             }
         }
         break;
@@ -1704,7 +1548,6 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0, int
 void gp_srand( unsigned long long seed)
 {
     unsigned int  j;
-
     // seed the first routine........................
     RandIx1 = (IC1 + seed) % M1;
     //... which is then used to seed the second.....
@@ -1729,21 +1572,17 @@ unsigned long long gp_rand(void)
 {
     double temp;
     unsigned int j;
-
     //  Except when initializing, this is where we start.  Generate the next number
     // for each sequence.
     RandIx1 = (IA1 * RandIx1 + IC1) % M1;
     RandIx2 = (IA2 * RandIx2 + IC2) % M2;
     RandIx3 = (IA3 * RandIx3 + IC3) % M3;
-
     // Use the third sequence to get an integer between 1 and 97
     j = 1 + ((97 * RandIx3) / M3);
     if (j > 97 || j < 1) cout <<"gplgp_rand() ??";
-
     // Return that table entry, and refill it.
     temp = TrandArray[j] * M3;
     TrandArray[j] = (RandIx1 + RandIx2 * RM2) * RM1;
-
     return (unsigned long long)temp;
 }
 
@@ -1762,18 +1601,19 @@ void exitOut(char *argv[], int fit)
 {
     FILE *stream;
     char fileName[30];
-
     //  ptr1 = strrchr(argv[0],'//'); // find last slash in path string
     //cout << "here is the file name ->" << ptr1 << endl;
     //cout << "here is argv[0] ->" << argv[0] << endl;
-
     fileName[0] = 0;
     strcpy(fileName, argv[23]);
     strcat(fileName, ".results.dat");
-
     stream = fopen(fileName, "a" ); // append to file
-    fprintf(stream, "%3d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",fit, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10], argv[11], argv[12], argv[13], argv[14], argv[15], argv[16], argv[17], argv[18], argv[19], argv[20], argv[21], argv[22], argv[23], argv[24]);
-
+    fprintf(stream,
+            "%3d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+            fit, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7],
+            argv[8], argv[9], argv[10], argv[11], argv[12], argv[13], argv[14], argv[15],
+            argv[16], argv[17], argv[18], argv[19], argv[20], argv[21], argv[22], argv[23],
+            argv[24]);
     fclose(stream);
 }
 //-------------------------------------------------------------
@@ -1782,17 +1622,14 @@ void writeOut(char *argv[])
 {
     FILE *stream;
     char fileName[30];
-
     fileName[0] = 0;
     strcpy(fileName, argv[23]);
     strcat(fileName, ".pop.log");
-
     stream = fopen(fileName, "a" ); // append to file
     pop.first(); // set to first in list
     do {
         fprintf(stream, "%3d,%s\n",pop.getFit(), pop.giveData());
     } while (pop.next() == 0); // till end of list
-
     fclose(stream);
 }
 
@@ -1805,13 +1642,11 @@ void buildString(char side, char boolein)
     //  char *copyPtr;
     char opArray[2];
     char numberStr[7];
-
     function[0] = 0;    // reset string to clear it
     strcpy(function, "("); // start out with open "("
     //  strcat(function, p.operators()); // add the op
     //  p.operators(copyPtr);
     strcat(function, p.operators(opArray)); // add the op
-
     //  x = (p.gp_rand() % 4); // makes 0 to 3
     x = (gp_rand() % 4); // makes 0 to 3
     //printf(" %d",x);
@@ -1841,7 +1676,6 @@ void buildString(char side, char boolein)
         strcpy(ArrayLeft,function);
     else
         strcpy(ArrayRight,function);
-
 }
 
 //#################################################################################################
@@ -1851,14 +1685,12 @@ void leaf(char boolein)
     //  char *copyPtr;
     char opArray[2];
     char numberStr[7];
-
     leafArray[0] = 0;       // clear the array
     //  if (p.gp_rand() % 3 == 0 && boolein == 'y') // y = yes to F( no to k
     if (gp_rand() % 3 == 0 && boolein == 'y') // y = yes to F( no to k
         strcpy(leafArray, " F(");
     else
         strcpy(leafArray, " (");
-
     //  p.operators(copyPtr); // add the op
     strcat(leafArray, p.operators(opArray));
     //  strcat(leafArray, copyPtr);
@@ -1866,7 +1698,6 @@ void leaf(char boolein)
     strcat(leafArray, p.numberStr(boolein, numberStr));
     strcat(leafArray, p.numberStr(boolein, numberStr));
     strcat(leafArray, ")");
-
 }
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //#######################################################################################################

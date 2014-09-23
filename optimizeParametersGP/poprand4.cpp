@@ -58,9 +58,7 @@ char *randpop::operators(char *ptr)
     //   ptr = array;
     //  printf("ptr->%c<-\n",array[0]);
     //  printf("ptr->%s<-\n",ptr);
-
     //exit 0;
-
     return ptr;
     //  return 0;
 }
@@ -81,13 +79,10 @@ char *randpop::numberStr(char bol, char *numberStr)
     char floats[5];
     int y;
     int negOrpos;
-
     //  char numberStr[7];
-
     x = (rand() % 6); // makes 0 to 5
     if (x < 2) {
         if (bol == 'n') k = (rand() % 4); // makes 0 to 3
-
         if (k < 2 && bol == 'n') {
             negOrpos = rand() % 2; // two choices  0 or 1
             if (negOrpos == 0) strcpy(numberStr, " k");
@@ -106,7 +101,6 @@ char *randpop::numberStr(char bol, char *numberStr)
         //number = .001;
         if (number == 0)          // float 0 ?
             number = .0001;
-
         //floats = fcvt(number, ndig, &dec, &sign);
         floatNum = fcvt(number, ndig, &dec, &sign);
         strcpy(floats, floatNum);
@@ -120,7 +114,6 @@ char *randpop::numberStr(char bol, char *numberStr)
             dec++;
         }
         zeros[i] = 0; // end with nul
-
         numberStr[0] = 0;        // set string to nul
         negOrpos = rand() % 2; // two choices  0 or 1
         if (negOrpos == 0) {
@@ -155,7 +148,6 @@ void randpop::instruc()
 void randpop::gp_srand( unsigned long seed)
 {
     unsigned int  j;
-
     // seed the first routine........................
     RandIx1 = (IC1 + seed) % M1;
     //... which is then used to seed the second.....
@@ -181,22 +173,17 @@ unsigned long randpop::gp_rand(void)
 {
     double temp;
     unsigned int j;
-
     //  Except when initializing, this is where we start.  Generate the next number
     // for each sequence.
     RandIx1 = (IA1 * RandIx1 + IC1) % M1;
     RandIx2 = (IA2 * RandIx2 + IC2) % M2;
     RandIx3 = (IA3 * RandIx3 + IC3) % M3;
-
     // Use the third sequence to get an integer between 1 and 97
     j = 1 + ((97 * RandIx3) / M3);
     if (j > 97 || j < 1)        printf("gplgp_rand() ??\n" );
-
-
     // Return that table entry, and refill it.
     temp = TrandArray[j] * M3;
     TrandArray[j] = (RandIx1 + RandIx2 * RM2) * RM1;
-
     return (unsigned long)temp;
 }
 

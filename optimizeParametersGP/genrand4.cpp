@@ -32,7 +32,6 @@ randpop p;
 int main (int argc, char *argv[])  /* pickup command line arguments */
 {
     //  clrscr();
-
     if (argc > 0 ) {
         time_t t;
         FILE *stream;
@@ -40,27 +39,19 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
         int y, x;
         char expresionOne[ARRAYSIZE];
         char expresionTwo[ARRAYSIZE];
-
         char opArray[2];
         char fileName[20];
-
         srand((unsigned) time(&t));  // seed both rands
         p.gp_srand( (unsigned)time(NULL) ); // seed the rand
-
         //    gotoxy(15,11);
         cout<< "Stand by building population of size "<< atoi(argv[1]) << "\n";
-
         //    stream = fopen("pop1.dat", "wt");
         fileName[0] = 0;
         strcpy(fileName, argv[2]);
         strcat(fileName, ".pop.dat");
-
         //cout << fileName << "\n";
-
         //exit(1);
-
         stream = fopen(fileName, "wt");
-
         y = atoi(argv[1]); // pop size
         x = 0;
         while (x < y) {
@@ -77,22 +68,16 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
             //      strcat(expresionOne, copyPtr); // add the op
             //      strcat(expresionOne, 0); // add the null
             //printf("%s\n", expresionOne);
-
             //return 1;
-
             //printf("%s\n", p.operators());
             //printf("%s\n", p.operators());
             //printf("%s\n", p.operators());
-
             //return 1;
-
-
             buildString('l','y');   //
             strcat(expresionOne, ArrayLeft);
             buildString('r','y');
             strcat(expresionOne, ArrayRight);
             strcat(expresionOne, ")@"); // end with close )
-
             expresionTwo[0] = 0;
             strcpy(expresionTwo, "("); // start out with open "("
             p.operators(opArray); // add the op
@@ -103,17 +88,13 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
             buildString('r','n');
             strcat(expresionTwo, ArrayRight);
             strcat(expresionTwo, ")"); // end with close )
-
             //printf("%s", expresionOne);
             //printf("%s\n", expresionTwo);
-
             //      fprintf(stream, expresionOne);
             fprintf(stream,"%s",expresionOne);
             //      fprintf(stream, expresionTwo);
             fprintf(stream,"%s",expresionTwo);
-
             fprintf(stream,"%s","\n");
-
             /*
                   if (strlen(expresionTwo) + strlen(expresionOne) >= (ARRAYSIZE*2) -8) {
             //	clrscr();
@@ -126,7 +107,6 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
         }
         fclose(stream); //close file
         //printf("\n done");
-
     }
     else
         p.instruc();
@@ -142,13 +122,11 @@ void buildString(char side, char boolein)
     //  char *copyPtr;
     char opArray[2];
     char numberStr[7];
-
     function[0] = 0;    // reset string to clear it
     strcpy(function, " ("); // start out with open "("
     //  strcat(function, p.operators()); // add the op
     //  p.operators(copyPtr);
     strcat(function, p.operators(opArray)); // add the op
-
     x = (p.gp_rand() % 4); // makes 0 to 3
     //printf(" %d",x);
     if (x == 0) {  // if 0 then 2 leaves
@@ -177,7 +155,6 @@ void buildString(char side, char boolein)
         strcpy(ArrayLeft,function);
     else
         strcpy(ArrayRight,function);
-
 }
 //-----------------------------------------------------------------
 void leaf(char boolein)
@@ -185,13 +162,11 @@ void leaf(char boolein)
     //  char *copyPtr;
     char opArray[2];
     char numberStr[7];
-
     leafArray[0] = 0;       // clear the array
     if (p.gp_rand() % 3 == 0 && boolein == 'y') // y = yes to F( no to k
         strcpy(leafArray, " F(");
     else
         strcpy(leafArray, " (");
-
     //  p.operators(copyPtr); // add the op
     strcat(leafArray, p.operators(opArray));
     //  strcat(leafArray, copyPtr);
@@ -199,7 +174,6 @@ void leaf(char boolein)
     strcat(leafArray, p.numberStr(boolein, numberStr));
     strcat(leafArray, p.numberStr(boolein, numberStr));
     strcat(leafArray, ")");
-
 }
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //#######################################################################################################
