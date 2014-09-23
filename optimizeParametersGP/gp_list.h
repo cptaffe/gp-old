@@ -4,29 +4,35 @@
 #include <string.h>
 
 class gp_node {
-  friend class gp_list;
-  public:  //formula,   fitness,     spiner,        next pinter
+    friend class gp_list;
+public:  //formula,   fitness,     spiner,        next pinter
     //gp_node (char *d=0, int f=0, unsigned long long s=0, gp_node *n=0)
     gp_node (char *d, int f)
-      { //if (d != 0) {
-	  //data = new char[strlen(d)+1];
-	  //if (!(data = new char[strlen(d)+1])) {
-	    //printf("\nInsufficient memory for Data node\n  of length %d\n", strlen(d));
-	    //exit (1);
-	  //}
-	  //strcpy(data,d);
-	  fitness = f;
-	  //spiner = 0;
-	//} else data = d;
-	  data = d;
-	//next = n;
-	next = 0;
-      };
-    char *getdata() { return data; };
-    int getfitness() { return fitness; };
+    {   //if (d != 0) {
+        //data = new char[strlen(d)+1];
+        //if (!(data = new char[strlen(d)+1])) {
+        //printf("\nInsufficient memory for Data node\n  of length %d\n", strlen(d));
+        //exit (1);
+        //}
+        //strcpy(data,d);
+        fitness = f;
+        //spiner = 0;
+        //} else data = d;
+        data = d;
+        //next = n;
+        next = 0;
+    };
+    char *getdata() {
+        return data;
+    };
+    int getfitness() {
+        return fitness;
+    };
     //unsigned long long getspiner() { return spiner; };
-    gp_node *getnext() { return next; };
-  private:
+    gp_node *getnext() {
+        return next;
+    };
+private:
     char *data;
     int fitness;
     //unsigned long long spiner;
@@ -34,9 +40,11 @@ class gp_node {
 };
 
 class gp_list {
-  //friend ostream &operator<<(ostream &o, gp_list &l);
-  public:
-    gp_list() { head = current = 0; };
+    //friend ostream &operator<<(ostream &o, gp_list &l);
+public:
+    gp_list() {
+        head = current = 0;
+    };
     ~gp_list();
     void sort();    // sort the list high first
     int remove();       // remove the node at current
@@ -53,7 +61,7 @@ class gp_list {
     int next();         // set curent to current->next
     int length();       // return length of list
     int isempty();      // return 1 if list is empty
-  private:
+private:
     gp_node *head;
     gp_node *current;
 };
