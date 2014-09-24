@@ -2,18 +2,17 @@
 
 // c libraries
 #include <cstdlib> // c standard library (<stdlib.h>)
-#include <stdio.h>
-#include <string.h> // c strings
-#include <ctype.h> // c types
-#include <time.h> // time, seed for random
-#include <math.h>
-#include <locale.h>
+#include <cstdio>
+#include <cstring> // c strings
+#include <cctype> // c types
+#include <ctime> // time, seed for random
+#include <cmath>
+#include <clocale>
 
 // c++ libraries
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <locale.h>
 
 // local includes
 #include "tstack2.h" // the stacks for ops & numbers
@@ -41,13 +40,9 @@ using namespace std;
 void gp_srand(unsigned long long seed);
 unsigned long long gp_rand(void);
 
-long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize,
-                    char *argv[]);
-//int calcfit(char expresion[], char *argv[], int scaleFit);
+long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize, char *argv[]);
 int calcfit(char expresion[], char *argv[]);
-
-void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
-                int &overSize, char *argv[]);
+void switchCase(char expresion[], int &i, int x, long double k, int &divBy0, int &overSize, char *argv[]);
 
 void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend);
 void getIndexLeafOnly(char stopChar, char *Astring, int &Aplace, int &Aend);
@@ -71,7 +66,6 @@ void selfCross(char Astring[], int, char *argv[]);
 void buildIntron(char *arrayIn);
 void exitOut(char *argv[], int fit);
 
-// added for insertExoGene
 #define ARRAYSIZE             100
 void leaf(char);
 void buildString(char, char);
@@ -79,24 +73,22 @@ randpop p;
 char leafArray[20];
 char ArrayLeft[60];
 char ArrayRight[60];
-// added for insertExoGene
 
 // global variables an absolute necessity for random number system....
 unsigned long long RandIx1, RandIx2, RandIx3;
 double TrandArray[98];
 
-gp_list pop;  // pop is data type list
-XYclass arrayXY;  // data type array for X & Y data from question file
-// from loadxy.h
+// pop is data type list
+gp_list pop;
 
-//long double number;
-//har charx;
-//template long double Tstack2<number> num(stack_size);  //  the operands (numbers) stack of default size
-//template char Tstack2<charx> op(stack_size);         //  the operators stack + - / *
+// data type array for X & Y data from question file
+XYclass arrayXY;
 
-Tstack2<long double> num(
-    stack_size);  //  the operands (numbers) stack of default size
-Tstack2<char> op(stack_size);         //  the operators stack + - / *
+// the operands (numbers) stack of default size
+Tstack2<long double> num(stack_size);
+
+// the operators stack + - / *
+Tstack2<char> op(stack_size);
 
 struct ptr_struct {
     char *charPtr;
@@ -115,14 +107,12 @@ int scaleFitness = 1;
 int main (int argc, char *argv[])  /* pickup command line arguments */
 {
     int j;
-    printf("%s",c);  // unix used as clear
 
     // error printing argv, exit
     if (argc < 25) {
         for (j = 0; j <= argc; j++) {
-            cout << "argv" << j << " " << argv[j] << "\n";
+            printf("argv[%d]: %s\n", j, argv[j]);
         }
-        cout << "\n\n";
         exit(9);
     }
 
@@ -133,7 +123,7 @@ int main (int argc, char *argv[])  /* pickup command line arguments */
     int *gDiffArray;
     int minPopSize, maxPopSize, exitMultValue, founderMinFitness, intronProb,
         genejumpProb, ratioOfXoverMainadf;
-    int minKeepFitness, pickForInsertionProb, pickForSelfCrossProb,
+    int pickForInsertionProb, pickForSelfCrossProb,
         pickForSpliceOutGeneProb;
     int minGeneSizeOut, maxGeneSizeOut;
     float multByNewSize;
@@ -367,7 +357,6 @@ void getIndexLeafOnly(char stopChar, char *Astring, int &Aplace, int &Aend)
 {
     int randA;
     int leafCountA = 0;
-    int closeParen;
     int count;
     int Astart;
     char *ptr;  // pointer to the start of the string
@@ -481,7 +470,6 @@ void insertExoGene(char Astring[], char transposIn[], int flip, char *argv[])
 // insert exogenous gene
 void makeExoGene(char *DynArrayTranspIn, int flip, char *argv[]) {
     char expresion[ARRAYSIZE];
-    char opArray[2];
 
     expresion[0] = 0;
     if (flip == 0) {
@@ -508,8 +496,6 @@ int pickForSpliceOutGene(int minGeneSizeOut, int maxGeneSizeOut, char *argv[]) {
     unsigned long long spin_1;
     unsigned long long maxSpiner;
     char strArray[Max_Str_size];
-    char *pc;
-    int flip = 0;
 
     maxSpiner = pop.getMaxSpin(); // spiner loaded here
     spin_1 = (gp_rand() % (maxSpiner -1)) +1;
@@ -530,6 +516,7 @@ int pickForSpliceOutGene(int minGeneSizeOut, int maxGeneSizeOut, char *argv[]) {
     spliceOutGene(DynArrayPick, minGeneSizeOut, maxGeneSizeOut,argv);
     // SPECIFIC PICKFOR* CODE END
     delete DynArrayPick;
+    return 0;
 }
 
 int pickForIntrons(char *argv[]) {
@@ -538,8 +525,6 @@ int pickForIntrons(char *argv[]) {
     unsigned long long spin_1;
     unsigned long long maxSpiner;
     char strArray[Max_Str_size];
-    char *pc;
-    int flip = 0;
 
     maxSpiner = pop.getMaxSpin(); // spiner loaded here
     spin_1 = (gp_rand() % (maxSpiner -1)) +1;
@@ -558,6 +543,7 @@ int pickForIntrons(char *argv[]) {
     introns(DynArrayPick, argv);
     // SPECIFIC PICKFOR* CODE END
     delete DynArrayPick;
+    return 0;
 }
 
 int pickForSelfCross(int ratioOfXoverMainadf, char *argv[]) {
@@ -566,8 +552,6 @@ int pickForSelfCross(int ratioOfXoverMainadf, char *argv[]) {
     unsigned long long spin_1;
     unsigned long long maxSpiner;
     char strArray[Max_Str_size];
-    char *pc;
-    int flip = 0;
 
     maxSpiner = pop.getMaxSpin(); // spiner loaded here
     spin_1 = (gp_rand() % (maxSpiner -1)) +1;
@@ -586,6 +570,7 @@ int pickForSelfCross(int ratioOfXoverMainadf, char *argv[]) {
     selfCross(DynArrayPick, ratioOfXoverMainadf, argv);
     // SPECIFIC PICKFOR* CODE END
     delete DynArrayPick;
+    return 0;
 }
 
 int pickForGenejump(char *argv[]) {
@@ -594,8 +579,6 @@ int pickForGenejump(char *argv[]) {
     unsigned long long spin_1;
     unsigned long long maxSpiner;
     char strArray[Max_Str_size];
-    char *pc;
-    int flip = 0;
 
     maxSpiner = pop.getMaxSpin(); // spiner loaded here
     spin_1 = (gp_rand() % (maxSpiner -1)) +1;
@@ -614,6 +597,7 @@ int pickForGenejump(char *argv[]) {
     geneJump(DynArrayPick, argv);
     // SPECIFIC PICKFOR* CODE END
     delete DynArrayPick;
+    return 0;
 }
 
 int pickForInsertion(char *argv[]) {
@@ -677,9 +661,9 @@ void loadxy(char *questionData) {
         fitSize--;
         rewind(XYfile);  // resart the file at the begining
         for (i = 0; i < fitSize; i++) {
-            fscanf(XYfile, "%s", &temp);   // scan a number X
+            fscanf(XYfile, "%s", (char *) &temp);   // scan a number X
             arrayXY.loadX(i,atoi(temp));
-            fscanf(XYfile, "%s", &temp);   // scan a number Y
+            fscanf(XYfile, "%s", (char *) &temp);   // scan a number Y
             arrayXY.loadY(i,atol(temp));
         }
         fclose(XYfile);
@@ -691,8 +675,6 @@ void first_run(char *argv[]) {
     char line[8500]; // line holds the exspresion from file
     char char1;
     int x; // for char
-    char *F;
-    char *atptr;
     char cmdStr[60];
     cmdStr[0] = 0;
     strcpy(cmdStr, argv[23]); //argv[15] node name stem
@@ -767,7 +749,7 @@ int calcfit(char expresion[], char *argv[]) {
 
         num.pop(temp1);   // pop the answer
         if (num.isEmpty() != 1 || op.isEmpty() != 1) {
-            error(" Main Stacks not empty", argv);
+            error((char *) " Main Stacks not empty", argv);
         }
 
         // if tite is large then the delta can be large
@@ -855,11 +837,9 @@ void spliceOutGene(char *strPtr, int minGeneSizeOut, int maxGeneSizeOut,
     int end = 0;
     int startSeg = 0;
     int endSeg = 0;
-    int index;
     char strArray[Max_Str_size];
     char terminalGene[Max_Str_size];
     char terminalBranch[Max_Str_size];
-    int geneIndex = 0;
     int x,y;
 
     // Pick the main function or the ADF for splicing out a gene segment
@@ -944,7 +924,6 @@ void introns(char *Astring, char *argv[]) {
     float number;
     int dec, sign, ndig = 4;
     int i, x, count;
-    int holdFit;
     char zeros[6];
     char *floatNum;
     char floats[5];
@@ -1167,7 +1146,6 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend) {
         while (count < randA) {
             Aplace++;
             if (Astring[Aplace] == '.' || Astring[Aplace] == 'X' || Astring[Aplace] == 'k')
-                //if (Astring[Aplace] == '.' || Astring[Aplace] == 'X')
                 count++;  // count the leaves till = randA
         }
 
@@ -1196,14 +1174,16 @@ void kill(char *argv[]) {
 
         pop.first();   // set current to first one in list
         
-        if (j == 0 && pop.getFit() == k) pop.remove(); // remove
-        else {
+        if (j == 0 && pop.getFit() == k) {
+            pop.remove(); // remove
+        } else {
             if (pop.getFit() == k) i = 1;   // getfitness of current node
             else i = 0;
             while (i < j) {
                 // set current to next one in list
-                if (pop.next() == 1) error("no pop; end of list",
-                                               argv);
+                if (pop.next() == 1) {
+                    error((char *) "no pop; end of list", argv);
+                }
                 // getfitness of current node
                 if (pop.getFit() == k) i++;
             }
@@ -1214,8 +1194,7 @@ void kill(char *argv[]) {
     }
 }
 
-long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize,
-                    char *argv[]) {   
+long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize, char *argv[]) {   
     char *atptr;  // @ptr
     char *kptr;
     long double temp1 = 0;
@@ -1227,65 +1206,75 @@ long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize,
     // next look for the k in the @ string
     kptr = strchr(atptr,'k');
     F = strchr(atptr,'F');
+
     if (F) {
         cout << "\n" << atptr << "\n";
         exit(9);
     }
-    i++; // first move past the F
-    i++; // then past the (
+
+    i += 2; // first move past the 'F', then past the '('
+
     while (countParen < 0) {
-        if (expresion[i] == '(') countParen--;
-        if (expresion[i] == ')') countParen++;
-        if (kptr) { // if it has k then calc F(.....) else just run it up
-            switchCase(expresion, i, x, temp1, divBy0, overSize,
-                       argv); // x is the index for x
+        
+        if (expresion[i] == '(') {
+            countParen--;
         }
-        else i++; // ignore F(....) just index past
+        
+        if (expresion[i] == ')') {
+            countParen++;
+        }
+
+        // if it has k then calc F(.....) else just run it up
+        if (kptr) {
+            // x is the index for x
+            switchCase(expresion, i, x, temp1, divBy0, overSize,
+                       argv);
+        } else {
+            i++; // ignore F(....) just index past
+        }
     }
-    //  if (kptr) num.pop<long double>(temp1);   // pop the value for k
-    //  if (kptr) num.pop<double>(temp1);   // pop the value for k
-    if (kptr) num.pop(temp1);   // pop the value for k
+
+    if (kptr) {
+        // pop the value for k
+        num.pop(temp1);
+    }
+
     index = 1; // past the @
+
     if (atptr[index] == '@') {
         cout << atptr << "\n";
-        error("problem here", argv);
+        error((char *) "problem here", argv);
     }
-    while (atptr[index] != 0) { //till end of string
+
+    //till end of string
+    while (atptr[index] != 0) {
         // temp1 is sent as k value
         switchCase(atptr, index, x, temp1, divBy0, overSize,
                    argv); // x is the index for x
     }
-    // send the answer as k
-    // can it be used in a recursion ?
-    //while still in function loop
-    // return the poped result
-    //  num.pop<long double>(temp1);   // pop the answer
-    //  num.pop<double>(temp1);   // pop the answer
+
     num.pop(temp1);   // pop the answer
+
     return temp1;
 }
 //-------------------------------------------------------------
 
-void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
-                int &overSize, char *argv[])
-{
+void switchCase(char expresion[], int &i, int x, long double k, int &divBy0, int &overSize, char *argv[]) {
     long double temp1;
     long double temp2;
-    //  long double temp3;
     char tempchar;
     char float_str[9];  // to hold floating point number as string
     int sign = 1;  // 1 or -1
     int j;
     int tooLarge = 10000000;
     double tooSmall = 0.0000001;
-    //cout << "->" << expresion << "<-\n";
-    //cout << " start sub\n";
+
     switch(expresion[i]) {
     case 'F':
         if (num.push(recalcF(expresion, i, x, divBy0, overSize,
                              argv))) {} // the value is now in the stack
         else {
-            error("expresion F num Stack full", argv);
+            error((char *) "expresion F num Stack full", argv);
         }
         break;
     case '+':
@@ -1295,7 +1284,7 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
         else {
             cout << "g = " << g << "\n";
             cout << expresion << "\n";
-            error("expresion Op Stack full", argv);
+            error((char *) "expresion Op Stack full", argv);
         }
         i++;
         break;
@@ -1304,7 +1293,7 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
             if (op.push(expresion[i])) {}
             else {
                 cout << expresion << "\n";
-                error("expresion Op Stack full", argv);
+                error((char *) "expresion Op Stack full", argv);
             }
             i++;
         }
@@ -1323,7 +1312,7 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
                 float_str[j] = '\0'; // end with null
                 if (num.push(sign * atof(float_str))) {}
                 else {
-                    error("expresion num at float Stack full", argv);
+                    error((char *) "expresion num at float Stack full", argv);
                 }
             }
             else { // else not number is k or X or F
@@ -1331,14 +1320,14 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
                 case 'k':
                     if (num.push(sign * k)) {} //load X from array into stack
                     else {
-                        error("expresion k num Stack full", argv);
+                        error((char *) "expresion k num Stack full", argv);
                     }
                 }
                 if (expresion[i] == 'X') { // if X
                 case 'X':
                     if (num.push(sign * arrayXY.getX(x))) {} //load X from array into stack
                     else {
-                        error("expresion X num Stack full", argv);
+                        error((char *) "expresion X num Stack full", argv);
                     }
                 }
                 i++; // past the X or F or k
@@ -1355,20 +1344,18 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
         num.pop(temp2);
         op.pop(tempchar);
         switch (tempchar) {
-        case '*': //cout << temp2 << "*" << temp1 << "\n";
-            //                                  temp3 = (temp2 * temp1);
-            //  cout << temp3 << " = " << temp2 << "*" << temp1 << "\n";
+        case '*':
             if ((temp2 + temp1) > tooLarge) {
                 overSize++;
                 if (num.push(temp2 * temp1/2)) {}
                 else {
-                    error("expresion Num Stack full", argv);
+                    error((char *) "expresion Num Stack full", argv);
                 }
             }
             else {
                 if (num.push(temp2 * temp1)) {}
                 else {
-                    error("expresion Num Stack full", argv);
+                    error((char *) "expresion Num Stack full", argv);
                 }
             }
             break;
@@ -1376,203 +1363,211 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
             if (temp1 == 0 || temp2 == 0 || temp1 < tooSmall) {
                 if (num.push(1.0)) {}
                 else {
-                    error("expresion Num Stack full", argv);
+                    error((char *) "expresion Num Stack full", argv);
                 }
                 if (temp1 == 0 || temp2 == 0) {
                     divBy0++;
-                }
-                else { //(temp1 < tooSmall )
+                } else {
                     overSize++;
                 }
             }
             else {
-                //  cout << temp2 << "/" << temp1 << "\n";
-                //                                    temp3 = (temp2 / temp1);
-                //  cout << temp3 << " = " << temp2 << "/" temp1 << \n";
                 if (num.push(temp2 / temp1)) {}
                 else {
-                    error("expresion Num Stack full", argv);
+                    error((char *) "expresion Num Stack full", argv);
                 }
             }
             break;
-            //			case '+': if (num.push(temp2 + temp1)) {}
-        case '+': //cout << temp2 << "+" << temp1 << "\n";
+        case '+':
             if (num.push(temp2 + temp1)) {}
             else {
-                error("expresion Num Stack full", argv);
+                error((char *) "expresion Num Stack full", argv);
             }
             break;
         case '-':
             if (num.push(temp2 - temp1)) {}
             else {
-                error("expresion Num Stack full", argv);
+                error((char *) "expresion Num Stack full", argv);
             }
             break;
         }
         i++; // go past the ')'
         break;
     }
-    //cout << " end sub\n";
 }
-
-//-------------------------------------------------------------
 
 void gp_srand( unsigned long long seed)
 {
     unsigned int  j;
-    // seed the first routine........................
+
+    // seed the first routine
     RandIx1 = (IC1 + seed) % M1;
-    //... which is then used to seed the second.....
+
+    // which is then used to seed the second
     RandIx1 = (IA1 * RandIx1 + IC1) % M1;
     RandIx2 = RandIx1 % M2;
-    // .. and third routines....
+
+    // and third routines
     RandIx1 = (IA1 * RandIx1 + IC1) % M1;
     RandIx3 = RandIx1 % M3;
+
     // Fill the random variable table with sequential uniform values
-    for (j = 1; j <= 97; j++)
-    {
-        // Deviates generated by the first two routines.............................
+    for (j = 1; j <= 97; j++) {
+        // Deviates generated by the first two routines
         RandIx1 = (IA1 * RandIx1 + IC1) % M1;
         RandIx2 = (IA2 * RandIx2 + IC2) % M2;
-        // Low and high order pieces combined here to create value.....
+
+        // Low and high order pieces combined here to create value
         TrandArray[j] = (RandIx1 + RandIx2 * RM2) * RM1;
     }
 }
 
-// returns an unsigned long long
-unsigned long long gp_rand(void)
-{
+unsigned long long gp_rand(void) {
     double temp;
     unsigned int j;
-    //  Except when initializing, this is where we start.  Generate the next number
-    // for each sequence.
+
+    // Except when initializing, this is where we start.
+    // Generate the next number for each sequence.
     RandIx1 = (IA1 * RandIx1 + IC1) % M1;
     RandIx2 = (IA2 * RandIx2 + IC2) % M2;
     RandIx3 = (IA3 * RandIx3 + IC3) % M3;
+
     // Use the third sequence to get an integer between 1 and 97
     j = 1 + ((97 * RandIx3) / M3);
+
     if (j > 97 || j < 1) cout <<"gplgp_rand() ??";
+
     // Return that table entry, and refill it.
     temp = TrandArray[j] * M3;
     TrandArray[j] = (RandIx1 + RandIx2 * RM2) * RM1;
-    return (unsigned long long)temp;
+
+    return (unsigned long long) temp;
 }
 
-//-------------------------------------------------------------
-
-void error(char *msg, char *argv[])
-{
-    //move(10, 20);
+void error(char *msg, char *argv[]) {
     writeOut(argv); // dump data to file
+    
     cout << "ERROR: " << msg << "." << "\n";
+    
     exit(9);
 }
-//------------------------------------------------------------
 
-void exitOut(char *argv[], int fit)
-{
+void exitOut(char *argv[], int fit) {
     FILE *stream;
     char fileName[30];
-    //  ptr1 = strrchr(argv[0],'//'); // find last slash in path string
-    //cout << "here is the file name ->" << ptr1 << endl;
-    //cout << "here is argv[0] ->" << argv[0] << endl;
+
     fileName[0] = 0;
     strcpy(fileName, argv[23]);
     strcat(fileName, ".results.dat");
     stream = fopen(fileName, "a" ); // append to file
+    
+    // print all 24 args
     fprintf(stream,
             "%3d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
             fit, argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7],
             argv[8], argv[9], argv[10], argv[11], argv[12], argv[13], argv[14], argv[15],
             argv[16], argv[17], argv[18], argv[19], argv[20], argv[21], argv[22], argv[23],
             argv[24]);
+    
     fclose(stream);
 }
-//-------------------------------------------------------------
 
-void writeOut(char *argv[])
-{
+void writeOut(char *argv[]) {
     FILE *stream;
     char fileName[30];
+
     fileName[0] = 0;
     strcpy(fileName, argv[23]);
     strcat(fileName, ".pop.log");
     stream = fopen(fileName, "a" ); // append to file
+
     pop.first(); // set to first in list
+    
     do {
         fprintf(stream, "%3d,%s\n",pop.getFit(), pop.giveData());
     } while (pop.next() == 0); // till end of list
+    
     fclose(stream);
 }
 
-//---------------------------------------------------------
-//#################################################################################################
-void buildString(char side, char boolein)
-{
+void buildString(char side, char boolein) {
     char function[60];
     int x;
-    //  char *copyPtr;
     char opArray[2];
     char numberStr[7];
+
     function[0] = 0;    // reset string to clear it
     strcpy(function, "("); // start out with open "("
-    //  strcat(function, p.operators()); // add the op
-    //  p.operators(copyPtr);
     strcat(function, p.operators(opArray)); // add the op
-    //  x = (p.gp_rand() % 4); // makes 0 to 3
     x = (gp_rand() % 4); // makes 0 to 3
-    //printf(" %d",x);
-    if (x == 0) {  // if 0 then 2 leaves
-        leaf(boolein);        // make new random leaf and put in leafArray string
-        strcat(function, leafArray);  // cat the leaf into function array
-        leaf(boolein);        // make new random leaf and put in leafArray string
-        strcat(function, leafArray);  // cat the leaf into function array
+
+    // if 0 then 2 leaves
+    if (x == 0) {
+        // make new random leaf and put in leafArray string
+        leaf(boolein);
+
+        // cat the leaf into function array
+        strcat(function, leafArray);
+
+        // make new random leaf and put in leafArray string
+        leaf(boolein);
+
+        // cat the leaf into function array
+        strcat(function, leafArray);
     }
-    if (x == 1) {   // if 1 then single on left, leaf on right
+
+    // if 1 then single on left, leaf on right
+    if (x == 1) {
         strcat(function, p.numberStr(boolein, numberStr));
-        leaf(boolein);        // make new random leaf and put in leafArray string
-        strcat(function, leafArray);  // cat the leaf into function array
+
+        // make new random leaf and put in leafArray string
+        leaf(boolein);
+
+        // cat the leaf into function array
+        strcat(function, leafArray);
     }
-    if (x == 2) {   // if 2 then  leaf left single on right
-        leaf(boolein);        // make new random leaf and put in leafArray string
-        strcat(function, leafArray);  // cat the leaf into function array
+
+    // if 2 then  leaf left single on right
+    if (x == 2) {
+        // make new random leaf and put in leafArray string
+        leaf(boolein);
+
+        // cat the leaf into function array
+        strcat(function, leafArray);
         strcat(function, p.numberStr(boolein, numberStr));
     }
-    if (x == 3) {   // if 3 then  only one leaf
+
+    // if 3 then  only one leaf
+    if (x == 3) {
         strcat(function, p.numberStr(boolein, numberStr));
         strcat(function, p.numberStr(boolein, numberStr));
     }
+
     strcat(function, ")");
-    //printf("Function = %s\n", function);
+
     if (side == 'l')
         strcpy(ArrayLeft,function);
     else
         strcpy(ArrayRight,function);
 }
 
-//#################################################################################################
-//-----------------------------------------------------------------
-void leaf(char boolein)
-{
-    //  char *copyPtr;
+void leaf(char boolein) {
     char opArray[2];
     char numberStr[7];
     leafArray[0] = 0;       // clear the array
-    //  if (p.gp_rand() % 3 == 0 && boolein == 'y') // y = yes to F( no to k
-    if (gp_rand() % 3 == 0 && boolein == 'y') // y = yes to F( no to k
+
+    // y = yes to F( no to k
+    if (gp_rand() % 3 == 0 && boolein == 'y') {
         strcpy(leafArray, " F(");
-    else
+    } else {
         strcpy(leafArray, " (");
-    //  p.operators(copyPtr); // add the op
+    }
+
     strcat(leafArray, p.operators(opArray));
-    //  strcat(leafArray, copyPtr);
-    //  cout << "should only be F(* --->"<< leafArray << endl;
     strcat(leafArray, p.numberStr(boolein, numberStr));
     strcat(leafArray, p.numberStr(boolein, numberStr));
     strcat(leafArray, ")");
 }
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//#######################################################################################################
 
 #undef M1
 #undef IA1
@@ -1585,8 +1580,3 @@ void leaf(char boolein)
 #undef M3
 #undef IA3
 #undef IC3
-
-/*      extra tools
-  while (!kbhit()) {}
-
-*/
