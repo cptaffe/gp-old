@@ -2,14 +2,8 @@
 #define _TSTACK2_H
 #define DEFSIZE             100
 
-//cplusplus here
-//#ifdef	__cplusplus
-//#include <locale.h>
-//#include <stdio.h>
-//#include <fstream>
-
-//#include <iostream.h>
 #include <iostream>
+
 using namespace std;
 using std::cout;
 
@@ -35,16 +29,10 @@ public:
 
 
 template< class T > Tstack2< T >::Tstack2(int s) {
-    //status = 0; // zero = good
     size = s > 0 && s < 1000 ? s : 10;
-    //size = s;
     top = -1;
     if (!(contents = new T[size])) {
-        //gotoxy(1, 19); // DOS only
-        //    move(1, 19); // Unix
-        //    printf(" Out of memory for stack\n");
         std::cout << "\nOut of memory for stack";
-        //status = 1; // 1 if out of mem
     }
 }
 
