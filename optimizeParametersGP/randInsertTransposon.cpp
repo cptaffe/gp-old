@@ -45,7 +45,6 @@ char *randpop::numberStr(char bol, char *numberStr) {
     char floats[5];
     int y;
     int negOrpos;
-
     x = (rand() % 6); // makes 0 to 5
     if (x < 2) {
         if (bol == 'n') {
@@ -62,39 +61,31 @@ char *randpop::numberStr(char bol, char *numberStr) {
             else strcpy(numberStr, " -X");
         }
     } else { // then a number
-        
         number = rand() % 10000;
         number = number/10000;
-        
         // float 0 ?
         if (number == 0) {
             number = .0001;
         }
-        
         floatNum = fcvt(number, ndig, &dec, &sign);
         strcpy(floats, floatNum);
-        
         zeros[0] = 0; // clear string
         i = 0;
-        
         while (dec < 0) {     // add zeros to front of number if needed
             zeros[i] = '0';
-            i++; dec++;
+            i++;
+            dec++;
         }
-        
         zeros[i] = 0; // end with nul
         numberStr[0] = 0;        // set string to nul
         negOrpos = rand() % 2; // two choices  0 or 1
-        
         if (negOrpos == 0) {
             strcpy(numberStr, " -.");    // put -decimal point in array
         } else {
             strcpy(numberStr, " .");    // put +decimal point in array
         }
-
         strcat(numberStr, zeros); // then zeros
         y = strlen(floats) - 1;
-
         while (floats[y] == '0') {  // remove zeros from end of number
             floats[y] = '\0';  // replace zero with null
             y--;
