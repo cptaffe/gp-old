@@ -30,165 +30,129 @@ using namespace std;
 unsigned long RandIx1, RandIx2, RandIx3;
 double TrandArray[98];
 
-/*
-char *randpop::operators()
-{
-//  char *operators[] = {"*","-","+","/"};
-  char operators[] = {'*','-','+','/'};
-  char ptr[2]; // short array for ops char & null
-  //printf("operator-> %s\n",operators[rand() % 4]);
-//  ptr[0] = *operators[rand() % 4];
-  ptr[0] = operators[rand() % 4];
-  ptr[1] = 0; // null the rest
-  return ptr;
-}
-*/
-
-//int randpop::operators(char *ptr)
-char *randpop::operators(char *ptr)
-{
-    char operators[] = {'*','-','+','/'};
-    //  char *ptr = new char[2];
-    //  char ptr[2]; // short array for ops char & null
-    //  char array[] = {0,0};
-    //  array[0] = operators[rand() % 4];
-    ptr[0] = operators[rand() % 4];
-    ptr[1] = 0;
-    //  array[1] = 0; // null the rest
-    //   ptr = array;
-    //  printf("ptr->%c<-\n",array[0]);
-    //  printf("ptr->%s<-\n",ptr);
-    //exit 0;
-    return ptr;
-    //  return 0;
+char *randpop::operators(char *ptr) {
+	char operators[] = {'*', '-', '+', '/'};
+	ptr[0] = operators[rand() % 4];
+	ptr[1] = 0;
+	return ptr;
 }
 
+char *randpop::numberStr(char bol, char *numberStr) {
+	float number;
+	int dec, sign, ndig = 4;
+	int i, x, k;
+	char zeros[4];
+	char *floatNum;
+	char floats[5];
+	int y;
+	int negOrpos;
+	x = (rand() % 6); // makes 0 to 5
 
+	if (x < 2) {
+		if (bol == 'n') { k = (rand() % 4); } // makes 0 to 3
 
-//#########################################################################################################
-char *randpop::numberStr(char bol, char *numberStr)
-{
-    float number;
-    //double number;
-    //int dec, sign, ndig = 3;
-    int dec, sign, ndig = 4;
-    int i, x, k;
-    char zeros[4];
-    //char *floats;
-    char *floatNum;
-    char floats[5];
-    int y;
-    int negOrpos;
-    //  char numberStr[7];
-    x = (rand() % 6); // makes 0 to 5
-    if (x < 2) {
-        if (bol == 'n') k = (rand() % 4); // makes 0 to 3
-        if (k < 2 && bol == 'n') {
-            negOrpos = rand() % 2; // two choices  0 or 1
-            if (negOrpos == 0) strcpy(numberStr, " k");
-            else strcpy(numberStr, " -k");
-        }
-        else {
-            negOrpos = rand() % 2; // two choices  0 or 1
-            if (negOrpos == 0) strcpy(numberStr, " X");
-            else strcpy(numberStr, " -X");
-        }
-    }
-    else { // then a number
-        //printf("Start method...",numberStr);
-        number = rand() % 10000;
-        number = number/10000;
-        //number = .001;
-        if (number == 0)          // float 0 ?
-            number = .0001;
-        //floats = fcvt(number, ndig, &dec, &sign);
-        floatNum = fcvt(number, ndig, &dec, &sign);
-        strcpy(floats, floatNum);
-        //printf("\nnumber-> %f dec -> %d,  ",number, dec);
-        //floats[++y] = '\0';
-        zeros[0] = 0; // clear string
-        i = 0;
-        while (dec < 0) {     // add zeros to front of number if needed
-            zeros[i] = '0';
-            i++;
-            dec++;
-        }
-        zeros[i] = 0; // end with nul
-        numberStr[0] = 0;        // set string to nul
-        negOrpos = rand() % 2; // two choices  0 or 1
-        if (negOrpos == 0) {
-            strcpy(numberStr, " -.");    // put -decimal point in array
-        }
-        else {
-            strcpy(numberStr, " .");    // put +decimal point in array
-        }
-        strcat(numberStr, zeros); // then zeros
-        y = strlen(floats) - 1;
-        //printf("length = %d number = %s", strlen(floats), floats);
-        while (floats[y] == '0') {  // remove zeros from end of number
-            floats[y] = '\0';  // replace zero with null
-            y--;
-        }
-        strcat(numberStr, floats);  // and cat the number
-        //    strcat(numberStr, " ");  // and cat a space at the end
-    }
-    return numberStr;
+		if (k < 2 && bol == 'n') {
+			negOrpos = rand() % 2; // two choices  0 or 1
+
+			if (negOrpos == 0) { strcpy(numberStr, " k"); }
+			else { strcpy(numberStr, " -k"); }
+		} else {
+			negOrpos = rand() % 2; // two choices  0 or 1
+
+			if (negOrpos == 0) { strcpy(numberStr, " X"); }
+			else { strcpy(numberStr, " -X"); }
+		}
+	} else { // then a number
+		number = rand() % 10000;
+		number = number / 10000;
+
+		// float 0 ?
+		if (number == 0) {
+			number = .0001;
+		}
+
+		floatNum = fcvt(number, ndig, &dec, &sign);
+		strcpy(floats, floatNum);
+		zeros[0] = 0; // clear string
+		i = 0;
+
+		// add zeros to front of number if needed
+		while (dec < 0) {
+			zeros[i] = '0';
+			i++;
+			dec++;
+		}
+
+		zeros[i] = 0; // end with nul
+		numberStr[0] = 0;        // set string to nul
+		negOrpos = rand() % 2; // two choices  0 or 1
+
+		if (negOrpos == 0) {
+			strcpy(numberStr, " -.");    // put -decimal point in array
+		} else {
+			strcpy(numberStr, " .");    // put +decimal point in array
+		}
+
+		strcat(numberStr, zeros); // then zeros
+		y = strlen(floats) - 1;
+
+		while (floats[y] == '0') {  // remove zeros from end of number
+			floats[y] = '\0';  // replace zero with null
+			y--;
+		}
+
+		strcat(numberStr, floats);  // and cat the number
+	}
+
+	return numberStr;
 }
 
-
-//############################################################################################
-void randpop::instruc()
-{
-    printf("\n");        /* the start up screen */
-    printf("          rangen@ [n]\n\n");
-    printf("          n    random genarate n formulas\n");
+void randpop::instruc() {
+	printf("\n");        /* the start up screen */
+	printf("          rangen@ [n]\n\n");
+	printf("          n    random genarate n formulas\n");
 }
-//=========================================================
 
-void randpop::gp_srand( unsigned long seed)
-{
-    unsigned int  j;
-    // seed the first routine........................
-    RandIx1 = (IC1 + seed) % M1;
-    //... which is then used to seed the second.....
-    RandIx1 = (IA1 * RandIx1 + IC1) % M1;
-    RandIx2 = RandIx1 % M2;
-    // .. and third routines....
-    RandIx1 = (IA1 * RandIx1 + IC1) % M1;
-    RandIx3 = RandIx1 % M3;
-    // Fill the random variable table with sequential uniform values
-    for (j = 1; j <= 97; j++)
-    {
-        // Deviates generated by the first two routines.............................
-        RandIx1 = (IA1 * RandIx1 + IC1) % M1;
-        RandIx2 = (IA2 * RandIx2 + IC2) % M2;
-        // Low and high order pieces combined here to create value.....
-        TrandArray[j] = (RandIx1 + RandIx2 * RM2) * RM1;
-    }
+void randpop::gp_srand(unsigned long seed) {
+	unsigned int  j;
+	// seed the first routine
+	RandIx1 = (IC1 + seed) % M1;
+	//... which is then used to seed the second
+	RandIx1 = (IA1 * RandIx1 + IC1) % M1;
+	RandIx2 = RandIx1 % M2;
+	// and third routines
+	RandIx1 = (IA1 * RandIx1 + IC1) % M1;
+	RandIx3 = RandIx1 % M3;
+
+	// Fill the random variable table with sequential uniform values
+	for (j = 1; j <= 97; j++) {
+		// Deviates generated by the first two routines
+		RandIx1 = (IA1 * RandIx1 + IC1) % M1;
+		RandIx2 = (IA2 * RandIx2 + IC2) % M2;
+		// Low and high order pieces combined here to create value
+		TrandArray[j] = (RandIx1 + RandIx2 * RM2) * RM1;
+	}
 }
 
 // returns an unsigned long
-//######################################################################################################
-unsigned long randpop::gp_rand(void)
-{
-    double temp;
-    unsigned int j;
-    //  Except when initializing, this is where we start.  Generate the next number
-    // for each sequence.
-    RandIx1 = (IA1 * RandIx1 + IC1) % M1;
-    RandIx2 = (IA2 * RandIx2 + IC2) % M2;
-    RandIx3 = (IA3 * RandIx3 + IC3) % M3;
-    // Use the third sequence to get an integer between 1 and 97
-    j = 1 + ((97 * RandIx3) / M3);
-    if (j > 97 || j < 1)        printf("gplgp_rand() ??\n" );
-    // Return that table entry, and refill it.
-    temp = TrandArray[j] * M3;
-    TrandArray[j] = (RandIx1 + RandIx2 * RM2) * RM1;
-    return (unsigned long)temp;
-}
+unsigned long randpop::gp_rand(void) {
+	double temp;
+	unsigned int j;
+	//  Except when initializing, this is where we start.
+	// Generate the next number for each sequence.
+	RandIx1 = (IA1 * RandIx1 + IC1) % M1;
+	RandIx2 = (IA2 * RandIx2 + IC2) % M2;
+	RandIx3 = (IA3 * RandIx3 + IC3) % M3;
+	// Use the third sequence to get an integer between 1 and 97
+	j = 1 + ((97 * RandIx3) / M3);
 
-//randpop::~gp_rand()
-//{
+	if (j > 97 || j < 1)        { printf("gplgp_rand() ??\n"); }
+
+	// Return that table entry, and refill it.
+	temp = TrandArray[j] * M3;
+	TrandArray[j] = (RandIx1 + RandIx2 * RM2) * RM1;
+	return (unsigned long)temp;
+}
 
 #undef M1
 #undef IA1
@@ -201,8 +165,3 @@ unsigned long randpop::gp_rand(void)
 #undef M3
 #undef IA3
 #undef IC3
-//}
-//      extra tools
-//while (!kbhit()) {}
-
-
