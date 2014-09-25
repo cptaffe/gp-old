@@ -1,18 +1,18 @@
- // Phil H Williams Jan-15-20013
+// Phil H Williams Jan-15-20013
 
- // c++ libs
+// c++ libs
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
 #include <iomanip>
 
- // c libs
+// c libs
 #include <math.h>
 #include <locale.h>
 #include <stdio.h>
 #include <string.h>
 
- // local libs
+// local libs
 #include "poprand4.h"
 
 using namespace std;

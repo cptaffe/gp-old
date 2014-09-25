@@ -1,9 +1,9 @@
- // Philip Williams  2-2-99
+// Philip Williams  2-2-99
 
 #ifndef _poprand4_H_
 #define _poprand4_H_
 
- // #define MAX_SIZE 100
+// #define MAX_SIZE 100
 
 class randpop {
 public:

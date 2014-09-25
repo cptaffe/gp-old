@@ -1,11 +1,11 @@
 
- // c++ libs
+// c++ libs
 #include <iostream>
 #include <fstream>
 #include <math.h>
 #include <iomanip>
 
- // c libs
+// c libs
 #include <cstdlib>
 #include <clocale>
 #include <cstdio>
@@ -13,7 +13,7 @@
 #include <ctype>
 #include <ctime>
 
- // local libs
+// local libs
 #include "poprand4.h"
 
 using namespace std;

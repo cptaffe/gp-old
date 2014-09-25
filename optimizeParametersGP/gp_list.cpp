@@ -1,5 +1,5 @@
 
- // c++ libs
+// c++ libs
 #include <cstdlib>
 #include <iostream>
 #include <cstdio>
@@ -7,12 +7,12 @@
 #include <fstream>
 #include <iomanip>
 
- // c libs
+// c libs
 #include <math.h>
 #include <unistd.h>
 #include <fcntl.h>
 
- // local libs
+// local libs
 #include "gp_list.h"
 
 using namespace std;
@@ -131,7 +131,7 @@ int gp_list::getMinCount(int min) {
 	return count; // return the count of the lowest fit
 }
 
- // deletes the node at current pointer
+// deletes the node at current pointer
 int gp_list::remove() {
 	gp_node *n; // and rejoins the list
 	char *data;
@@ -177,7 +177,7 @@ char *gp_list::SpinString(unsigned long long rnd) {
 	return ptr;
 }
 
- // returns the current spin pie for testing
+// returns the current spin pie for testing
 int gp_list::getFit() {
 	return current->fitness;
 }

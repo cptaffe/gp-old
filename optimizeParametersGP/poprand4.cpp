@@ -1,4 +1,4 @@
- // Philip Williams  2-2-99
+// Philip Williams  2-2-99
 
 #include <iostream>
 using namespace std;
@@ -134,7 +134,7 @@ void randpop::gp_srand(unsigned long seed) {
 	}
 }
 
- // returns an unsigned long
+// returns an unsigned long
 unsigned long randpop::gp_rand(void) {
 	double temp;
 	unsigned int j;

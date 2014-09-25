@@ -1,6 +1,6 @@
- // gp_onDautherCell
+// gp_onDautherCell
 
- // c libraries
+// c libraries
 #include <cstdlib> // c standard library (<stdlib.h>)
 #include <cstdio>
 #include <cstring> // c strings
@@ -9,12 +9,12 @@
 #include <cmath>
 #include <clocale>
 
- // c++ libraries
+// c++ libraries
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 
- // local includes
+// local includes
 #include "tstack2.h" // the stacks for ops & numbers
 #include "loadxy.h" // struct for curve fit data
 #include "gp_list.h" // list struct for population
@@ -72,20 +72,20 @@ char leafArray[20];
 char ArrayLeft[60];
 char ArrayRight[60];
 
- // global variables an absolute necessity for random number system....
+// global variables an absolute necessity for random number system....
 unsigned long long RandIx1, RandIx2, RandIx3;
 double TrandArray[98];
 
- // pop is data type list
+// pop is data type list
 gp_list pop;
 
- // data type array for X & Y data from question file
+// data type array for X & Y data from question file
 XYclass arrayXY;
 
- // the operands (numbers) stack of default size
+// the operands (numbers) stack of default size
 Tstack2<long double> num(stack_size);
 
- // the operators stack + - / *
+// the operators stack + - / *
 Tstack2<char> op(stack_size);
 
 struct ptr_struct {
@@ -358,8 +358,8 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[]) {
 	return;
 }
 
- // put leaf in dynamic array
- // return array containing intron
+// put leaf in dynamic array
+// return array containing intron
 void buildIntron(char *arrayIn) {
 	int zero_or_one;
 	const char multByOne[] = "\(* (/";
@@ -498,7 +498,7 @@ void insertExoGene(char Astring[], char transposIn[], int flip, char *argv[]) {
 	return;
 }
 
- // insert exogenous gene
+// insert exogenous gene
 void makeExoGene(char *DynArrayTranspIn, int flip, char *argv[]) {
 	char expresion[ARRAYSIZE];
 	expresion[0] = 0;
@@ -516,11 +516,11 @@ void makeExoGene(char *DynArrayTranspIn, int flip, char *argv[]) {
 	return;
 }
 
- // Note: pickForSpliceOutGene, pickForIntrons, pickForSelfCross,
- // pickForGenejump,
- // share a large amount of code. Actually, everything
- // except for the last function before the delete is exactly
- // the same.
+// Note: pickForSpliceOutGene, pickForIntrons, pickForSelfCross,
+// pickForGenejump,
+// share a large amount of code. Actually, everything
+// except for the last function before the delete is exactly
+// the same.
 
 int pickForSpliceOutGene(int minGeneSizeOut, int maxGeneSizeOut, char *argv[]) {
 	char *strptr; // char pointer for strings
@@ -984,7 +984,7 @@ void spliceOutGene(char *strPtr, int minGeneSizeOut, int maxGeneSizeOut,
 	return;
 }
 
- // adds introns to string
+// adds introns to string
 void introns(char *Astring, char *argv[]) {
 	float number;
 	int dec, sign, ndig = 4;
@@ -1234,7 +1234,7 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend) {
 	}
 }
 
- // kill the weekest random 3
+// kill the weekest random 3
 void kill(char *argv[]) {
 	int k, i, j, x;
 
@@ -1327,7 +1327,7 @@ long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize,
 	num.pop(temp1); // pop the answer
 	return temp1;
 }
- // -------------------------------------------------------------
+// -------------------------------------------------------------
 
 void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
 				int &overSize, char *argv[]) {
