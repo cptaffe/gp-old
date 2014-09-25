@@ -5,21 +5,10 @@
 
 class gp_node {
 	friend class gp_list;
-public: // formula,   fitness,     spiner,        next pinter
-	// gp_node (char *d=0, int f=0, unsigned long long s=0, gp_node *n=0)
+public:
 	gp_node(char *d, int f) {
-		// if (d != 0) {
-		// data = new char[strlen(d)+1];
-		// if (!(data = new char[strlen(d)+1])) {
-		// printf("\nInsufficient memory for Data node\n  of length %d\n", strlen(d));
-		// exit (1);
-		// }
-		// strcpy(data,d);
 		fitness = f;
-		// spiner = 0;
-		// } else data = d;
 		data = d;
-		// next = n;
 		next = 0;
 	};
 	char *getdata() {
@@ -28,19 +17,16 @@ public: // formula,   fitness,     spiner,        next pinter
 	int getfitness() {
 		return fitness;
 	};
-	// unsigned long long getspiner() { return spiner; };
 	gp_node *getnext() {
 		return next;
 	};
 private:
 	char *data;
 	int fitness;
-	// unsigned long long spiner;
 	gp_node *next;
 };
 
 class gp_list {
-	// friend ostream &operator<<(ostream &o, gp_list &l);
 public:
 	gp_list() {
 		head = current = 0;
@@ -66,7 +52,3 @@ private:
 	gp_node *current;
 };
 #endif
-
-// ######################################################################################
-// ######################################################################################
-// ######################################################################################
