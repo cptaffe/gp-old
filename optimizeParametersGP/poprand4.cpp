@@ -1,4 +1,4 @@
-// Philip Williams  2-2-99
+ // Philip Williams  2-2-99
 
 #include <iostream>
 using namespace std;
@@ -84,24 +84,24 @@ char *randpop::numberStr(char bol, char *numberStr) {
 		}
 
 		zeros[i] = 0; // end with nul
-		numberStr[0] = 0;        // set string to nul
+		numberStr[0] = 0; // set string to nul
 		negOrpos = rand() % 2; // two choices  0 or 1
 
 		if (negOrpos == 0) {
-			strcpy(numberStr, " -.");    // put -decimal point in array
+			strcpy(numberStr, " -."); // put -decimal point in array
 		} else {
-			strcpy(numberStr, " .");    // put +decimal point in array
+			strcpy(numberStr, " ."); // put +decimal point in array
 		}
 
 		strcat(numberStr, zeros); // then zeros
 		y = strlen(floats) - 1;
 
-		while (floats[y] == '0') {  // remove zeros from end of number
-			floats[y] = '\0';  // replace zero with null
+		while (floats[y] == '0') { // remove zeros from end of number
+			floats[y] = '\0'; // replace zero with null
 			y--;
 		}
 
-		strcat(numberStr, floats);  // and cat the number
+		strcat(numberStr, floats); // and cat the number
 	}
 
 	return numberStr;
@@ -117,7 +117,7 @@ void randpop::gp_srand(unsigned long seed) {
 	unsigned int  j;
 	// seed the first routine
 	RandIx1 = (IC1 + seed) % M1;
-	//... which is then used to seed the second
+	// ... which is then used to seed the second
 	RandIx1 = (IA1 * RandIx1 + IC1) % M1;
 	RandIx2 = RandIx1 % M2;
 	// and third routines
@@ -134,11 +134,11 @@ void randpop::gp_srand(unsigned long seed) {
 	}
 }
 
-// returns an unsigned long
+ // returns an unsigned long
 unsigned long randpop::gp_rand(void) {
 	double temp;
 	unsigned int j;
-	//  Except when initializing, this is where we start.
+	// Except when initializing, this is where we start.
 	// Generate the next number for each sequence.
 	RandIx1 = (IA1 * RandIx1 + IC1) % M1;
 	RandIx2 = (IA2 * RandIx2 + IC2) % M2;

@@ -1,5 +1,5 @@
 
-// c++ libs
+ // c++ libs
 #include <cstdlib>
 #include <iostream>
 #include <cstdio>
@@ -7,12 +7,12 @@
 #include <fstream>
 #include <iomanip>
 
-// c libs
+ // c libs
 #include <math.h>
 #include <unistd.h>
 #include <fcntl.h>
 
-// local libs
+ // local libs
 #include "gp_list.h"
 
 using namespace std;
@@ -43,7 +43,7 @@ void gp_list::sort() {
 
 	for (pass = 1; pass < length; pass++) {
 		if (head->fitness < head->next->fitness) {
-			n1 = head;   // if the first 2 need swaping take care of head
+			n1 = head; // if the first 2 need swaping take care of head
 			n2 = head->next;
 			n1->next = n2->next;
 			head = n2;
@@ -53,10 +53,10 @@ void gp_list::sort() {
 		for (current = head; current->next->next != 0; current = current->next) {
 			if (current->next->fitness < current->next->next->fitness) {
 				n1 = current;
-				n2 = current->next;        // setup
+				n2 = current->next; // setup
 				n3 = current->next->next;
 				n2->next = n3->next;
-				n1->next = n3;             // and swap
+				n1->next = n3; // and swap
 				n3->next = n2;
 			}
 		}
@@ -70,7 +70,7 @@ int gp_list::add(char *d, int f) {
 	// empty just run current to end of list
 	// always add at end of list
 	if (!(dataPtr =  new char[strlen(d) + 1])) {
-		//    move(1, 16);
+		// move(1, 16);
 		cout << "Insufficient memory for Data to node";
 		return 1;
 	}
@@ -78,7 +78,7 @@ int gp_list::add(char *d, int f) {
 	strcpy(dataPtr, d);
 
 	if (!(n = new gp_node(dataPtr, f))) {
-		delete dataPtr;  // delete because out of memory for node
+		delete dataPtr; // delete because out of memory for node
 		dataPtr = 0;
 		cout << "Insufficient memory for node";
 		return 1;
@@ -98,10 +98,10 @@ int gp_list::add(char *d, int f) {
 int gp_list::getMin() {
 	gp_node *n;
 	int min = 200;
-	n = head;      // set to first node
+	n = head; // set to first node
 
 	if (n == 0) {
-		//move(1,6);
+		// move(1,6);
 		printf("    null\n");
 		exit(1);
 	}
@@ -114,13 +114,13 @@ int gp_list::getMin() {
 		n = n->next;
 	}
 
-	return min;  // return the lowest fitness value
+	return min; // return the lowest fitness value
 }
 
 int gp_list::getMinCount(int min) {
 	gp_node *n;
 	int count = 0; // count number of min values
-	n = head;      // set to first node
+	n = head; // set to first node
 
 	while (n != 0) {
 		if (n->fitness == min) { count++; } // count number of min fitness values
@@ -128,17 +128,17 @@ int gp_list::getMinCount(int min) {
 		n = n->next;
 	}
 
-	return count;  // return the count of the lowest fit
+	return count; // return the count of the lowest fit
 }
 
-// deletes the node at current pointer
+ // deletes the node at current pointer
 int gp_list::remove() {
-	gp_node *n;         //  and rejoins the list
+	gp_node *n; // and rejoins the list
 	char *data;
 
 	// precondition: current points to the node
-	if (current == head) {      // for deletion
-		head = current->next;    // rejoin head around current
+	if (current == head) { // for deletion
+		head = current->next; // rejoin head around current
 	} else {
 		for (n = head; n->next != current; n = n->next);
 
@@ -158,9 +158,9 @@ char *gp_list::giveData() {
 
 char *gp_list::SpinString(unsigned long long rnd) {
 	gp_node *n;
-	char *ptr = NULL;  // pointer to the string
+	char *ptr = NULL; // pointer to the string
 	unsigned long long sum = 0;
-	n = head;      // set to first node
+	n = head; // set to first node
 
 	while (n->next != NULL) { // till end of list
 		sum += n->fitness;
@@ -177,7 +177,7 @@ char *gp_list::SpinString(unsigned long long rnd) {
 	return ptr;
 }
 
-// returns the current spin pie for testing
+ // returns the current spin pie for testing
 int gp_list::getFit() {
 	return current->fitness;
 }
@@ -247,7 +247,7 @@ int gp_list::changeStr(char *add, char *del) {
 
 	while (current != 0) {
 		if (strcmp(current->data, del) == 0) { // find the match
-			break;  // if the same string then break out of the loop
+			break; // if the same string then break out of the loop
 		}
 
 		current = current->next;
@@ -255,6 +255,6 @@ int gp_list::changeStr(char *add, char *del) {
 
 	dataPtrOut = current->data;
 	current->data = dataPtrIn;
-	delete dataPtrOut;  // remove the old
+	delete dataPtrOut; // remove the old
 	return 0;
 }

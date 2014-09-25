@@ -1,6 +1,6 @@
-// gp_onDautherCell
+ // gp_onDautherCell
 
-// c libraries
+ // c libraries
 #include <cstdlib> // c standard library (<stdlib.h>)
 #include <cstdio>
 #include <cstring> // c strings
@@ -9,14 +9,14 @@
 #include <cmath>
 #include <clocale>
 
-// c++ libraries
+ // c++ libraries
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 
-// local includes
+ // local includes
 #include "tstack2.h" // the stacks for ops & numbers
-#include "loadxy.h"   // struct for curve fit data
+#include "loadxy.h" // struct for curve fit data
 #include "gp_list.h" // list struct for population
 #include "poprand4.h"
 
@@ -51,11 +51,11 @@ void loadxy(char *file);
 void makeExoGene(char *DynArrayTranspIn, int flip, char *argv[]);
 void insertExoGene(char Astring[], char Bstring[], int flip, char *argv[]);
 void kill(char *argv[]);
-int pickForInsertion(char *argv[]); //
-int pickForGenejump(char *argv[]); //
-int pickForSelfCross(int, char *argv[]); //
-int pickForIntrons(char *argv[]); //
-int pickForSpliceOutGene(int, int, char *argv[]); //
+int pickForInsertion(char *argv[]); // 
+int pickForGenejump(char *argv[]); // 
+int pickForSelfCross(int, char *argv[]); // 
+int pickForIntrons(char *argv[]); // 
+int pickForSpliceOutGene(int, int, char *argv[]); // 
 void writeOut(char *argv[]);
 void geneJump(char *, char *argv[]);
 void introns(char *, char *argv[]); // adds introns to string
@@ -72,20 +72,20 @@ char leafArray[20];
 char ArrayLeft[60];
 char ArrayRight[60];
 
-// global variables an absolute necessity for random number system....
+ // global variables an absolute necessity for random number system....
 unsigned long long RandIx1, RandIx2, RandIx3;
 double TrandArray[98];
 
-// pop is data type list
+ // pop is data type list
 gp_list pop;
 
-// data type array for X & Y data from question file
+ // data type array for X & Y data from question file
 XYclass arrayXY;
 
-// the operands (numbers) stack of default size
+ // the operands (numbers) stack of default size
 Tstack2<long double> num(stack_size);
 
-// the operators stack + - / *
+ // the operators stack + - / *
 Tstack2<char> op(stack_size);
 
 struct ptr_struct {
@@ -153,8 +153,8 @@ int main(int argc, char *argv[]) {
 		exit(9);
 	}
 
-	loadxy(argv[24]);  // load the x & y from file to arraya
-	gp_srand((unsigned)time(NULL));   // seed the rand
+	loadxy(argv[24]); // load the x & y from file to arraya
+	gp_srand((unsigned)time(NULL)); // seed the rand
 	cout.setf(ios::right, ios::adjustfield);
 	// build command string
 	cmdStr[0] = 0;
@@ -171,7 +171,7 @@ int main(int argc, char *argv[]) {
 			size < minPopSize) {
 		while (pop.length() > maxPopSize) { kill(argv); }
 
-		exitVal = system(cmdStr);  // run command string in loop
+		exitVal = system(cmdStr); // run command string in loop
 
 		if (exitVal != 0) {
 			fprintf(stderr, "Error\n%s\n", cmdStr);
@@ -264,16 +264,16 @@ int main(int argc, char *argv[]) {
 
 void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[]) {
 	int Aplace = 0;
-	int Bplace = 0;   // postions holders
+	int Bplace = 0; // postions holders
 	int Aend = 0;
-	int Bend = 0;   // postions holders
+	int Bend = 0; // postions holders
 	int x, y;
 	int index;
 	char stopChar;
 	char same = 't'; // track if same substrings
 	char firstXover[Max_Str_size];
 	char secondXover[Max_Str_size];
-	stopChar = '@';  // start at 0 and end at '@'or
+	stopChar = '@'; // start at 0 and end at '@'or
 
 	if (gp_rand() % ratioOfXoverMainadf == 0) {
 		stopChar = 0; // start at @ to end of string
@@ -289,10 +289,10 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[]) {
 		getIndex(stopChar, Astring, Bplace, Bend);
 
 		if ((Aplace - Aend) == (Bplace - Bend)) { // the strings are same length
-			x = Aplace;    // test to see if the are the same data too
+			x = Aplace; // test to see if the are the same data too
 			y = Bplace;
 
-			if (x == Aend && y == Bend) { same = 't'; }  // same substrings so go again
+			if (x == Aend && y == Bend) { same = 't'; } // same substrings so go again
 			else { same = 'f'; }
 		}
 
@@ -302,14 +302,14 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[]) {
 
 	x = 0; // x is the positional index for the strArray string
 
-	while (x < Aplace) {   // load the Ahead into strArray
+	while (x < Aplace) { // load the Ahead into strArray
 		firstXover[x] = Astring[x];
 		x++;
 	}
 
 	index = Bplace;
 
-	while (index < Bend) {  // load the Bmiddle
+	while (index < Bend) { // load the Bmiddle
 		firstXover[x] = Astring[index];
 		index++;
 		x++;
@@ -319,7 +319,7 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[]) {
 
 	while (Astring[index] != 0) {
 		firstXover[x] = Astring[index];
-		x++;                // load the Atail into strArray
+		x++; // load the Atail into strArray
 		index++;
 	}
 
@@ -327,7 +327,7 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[]) {
 	calcfit(firstXover, argv);
 	x = 0; // x is the positional index for the string
 
-	while (x < Bplace) {   // load the Bhead into strArray
+	while (x < Bplace) { // load the Bhead into strArray
 		secondXover[x] = Astring[x];
 		x++;
 	}
@@ -339,7 +339,7 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[]) {
 
 	index = Aplace;
 
-	while (index < Aend) {  // load the Amiddle
+	while (index < Aend) { // load the Amiddle
 		secondXover[x] = Astring[index];
 		index++;
 		x++;
@@ -349,7 +349,7 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[]) {
 
 	while (Astring[index] != 0) {
 		secondXover[x] = Astring[index];
-		x++;                // load the tail
+		x++; // load the tail
 		index++;
 	}
 
@@ -358,8 +358,8 @@ void selfCross(char Astring[], int ratioOfXoverMainadf, char *argv[]) {
 	return;
 }
 
-// put leaf in dynamic array
-// return array containing intron
+ // put leaf in dynamic array
+ // return array containing intron
 void buildIntron(char *arrayIn) {
 	int zero_or_one;
 	const char multByOne[] = "\(* (/";
@@ -383,10 +383,10 @@ void getIndexLeafOnly(char stopChar, char *Astring, int &Aplace, int &Aend) {
 	int leafCountA = 0;
 	int count;
 	int Astart;
-	char *ptr;  // pointer to the start of the string
+	char *ptr; // pointer to the start of the string
 
 	if (stopChar == '@') {
-		Astart = 0;          // cross the main function
+		Astart = 0; // cross the main function
 	} else { // else start at '@' and end at nul
 		ptr = strchr(Astring, '@'); // user strchr to find the @
 		Astart = ptr - Astring; // start is position of @ +1
@@ -397,10 +397,10 @@ void getIndexLeafOnly(char stopChar, char *Astring, int &Aplace, int &Aend) {
 	while (Astring[Aplace] != stopChar) { // till at stopChar
 		if (Astring[Aplace] == '.' || Astring[Aplace] == 'X' ||
 				Astring[Aplace] == 'k') {
-			leafCountA++;  // count number of leaves in string
+			leafCountA++; // count number of leaves in string
 		}
 
-		Aplace++;    // move and test the next char
+		Aplace++; // move and test the next char
 	}
 
 	randA = (gp_rand() % leafCountA + 1);
@@ -412,11 +412,11 @@ void getIndexLeafOnly(char stopChar, char *Astring, int &Aplace, int &Aend) {
 
 		if (Astring[Aplace] == '.' || Astring[Aplace] == 'X' ||
 				Astring[Aplace] == 'k') {
-			count++;  // count the leaves till = randA
+			count++; // count the leaves till = randA
 		}
 	}
 
-	//test for sign on leaf
+	// test for sign on leaf
 	if (Astring[Aplace - 1] == '-') {
 		Aplace--; // if negative backup one
 	}
@@ -425,7 +425,7 @@ void getIndexLeafOnly(char stopChar, char *Astring, int &Aplace, int &Aend) {
 
 	while (Astring[Aend] != ')' && Astring[Aend] != ' ' && Astring[Aend] != '(' &&
 			Astring[Aend] != stopChar && Astring[Aend] != 0) {
-		Aend++;  // Aend is now the position for end of leaf
+		Aend++; // Aend is now the position for end of leaf
 	}
 
 	Aplace--; // and backup one to pickup space on front end
@@ -445,7 +445,7 @@ void insertExoGene(char Astring[], char transposIn[], int flip, char *argv[]) {
 	const char paren[] = ")";
 
 	if (flip == 0) {
-		stopChar = '@';  // start at 0 and end at '@'or
+		stopChar = '@'; // start at 0 and end at '@'or
 	} else {
 		stopChar = '\0'; // start at @ to end of string
 	}
@@ -498,7 +498,7 @@ void insertExoGene(char Astring[], char transposIn[], int flip, char *argv[]) {
 	return;
 }
 
-// insert exogenous gene
+ // insert exogenous gene
 void makeExoGene(char *DynArrayTranspIn, int flip, char *argv[]) {
 	char expresion[ARRAYSIZE];
 	expresion[0] = 0;
@@ -508,7 +508,7 @@ void makeExoGene(char *DynArrayTranspIn, int flip, char *argv[]) {
 		buildString('r', 'y');
 		strcat(expresion, ArrayRight);
 	} else {
-		buildString('l', 'n');  //   with no F in string
+		buildString('l', 'n'); // with no F in string
 		strcat(expresion, ArrayLeft);
 	}
 
@@ -516,14 +516,14 @@ void makeExoGene(char *DynArrayTranspIn, int flip, char *argv[]) {
 	return;
 }
 
-// Note: pickForSpliceOutGene, pickForIntrons, pickForSelfCross,
-// pickForGenejump,
-// share a large amount of code. Actually, everything
-// except for the last function before the delete is exactly
-// the same.
+ // Note: pickForSpliceOutGene, pickForIntrons, pickForSelfCross,
+ // pickForGenejump,
+ // share a large amount of code. Actually, everything
+ // except for the last function before the delete is exactly
+ // the same.
 
 int pickForSpliceOutGene(int minGeneSizeOut, int maxGeneSizeOut, char *argv[]) {
-	char *strptr;   // char pointer for strings
+	char *strptr; // char pointer for strings
 	char *DynArrayPick; // pointer for dynamic arrays
 	unsigned long long spin_1;
 	unsigned long long maxSpiner;
@@ -533,7 +533,7 @@ int pickForSpliceOutGene(int minGeneSizeOut, int maxGeneSizeOut, char *argv[]) {
 	strptr = pop.SpinString(spin_1);
 	// copy the string so the pointer can be removed
 	strcpy(strArray, strptr);
-	strptr = 0; //null the pointer for the kill
+	strptr = 0; // null the pointer for the kill
 
 	if (!(DynArrayPick = new char[strlen(strArray) + 1])) {
 		cout << "ERROR out of RAM\n";
@@ -549,7 +549,7 @@ int pickForSpliceOutGene(int minGeneSizeOut, int maxGeneSizeOut, char *argv[]) {
 }
 
 int pickForIntrons(char *argv[]) {
-	char *strptr;   // char pointer for strings
+	char *strptr; // char pointer for strings
 	char *DynArrayPick; // pointer for dynamic arrays
 	unsigned long long spin_1;
 	unsigned long long maxSpiner;
@@ -559,7 +559,7 @@ int pickForIntrons(char *argv[]) {
 	strptr = pop.SpinString(spin_1);
 	// copy the string so the pointer can be removed
 	strcpy(strArray, strptr);
-	strptr = 0; //null the pointer for the kill
+	strptr = 0; // null the pointer for the kill
 
 	if (!(DynArrayPick = new char[strlen(strArray) + 1])) {
 		cout << "ERROR out of RAM\n";
@@ -575,7 +575,7 @@ int pickForIntrons(char *argv[]) {
 }
 
 int pickForSelfCross(int ratioOfXoverMainadf, char *argv[]) {
-	char *strptr;   // char pointer for strings
+	char *strptr; // char pointer for strings
 	char *DynArrayPick; // pointer for dynamic arrays
 	unsigned long long spin_1;
 	unsigned long long maxSpiner;
@@ -585,7 +585,7 @@ int pickForSelfCross(int ratioOfXoverMainadf, char *argv[]) {
 	strptr = pop.SpinString(spin_1);
 	// copy the string so the pointer can be removed
 	strcpy(strArray, strptr);
-	strptr = 0; //null the pointer for the kill
+	strptr = 0; // null the pointer for the kill
 
 	if (!(DynArrayPick = new char[strlen(strArray) + 1])) {
 		cout << "ERROR out of RAM\n";
@@ -601,7 +601,7 @@ int pickForSelfCross(int ratioOfXoverMainadf, char *argv[]) {
 }
 
 int pickForGenejump(char *argv[]) {
-	char *strptr;   // char pointer for strings
+	char *strptr; // char pointer for strings
 	char *DynArrayPick; // pointer for dynamic arrays
 	unsigned long long spin_1;
 	unsigned long long maxSpiner;
@@ -611,7 +611,7 @@ int pickForGenejump(char *argv[]) {
 	strptr = pop.SpinString(spin_1);
 	// copy the string so the pointer can be removed
 	strcpy(strArray, strptr);
-	strptr = 0; //null the pointer for the kill
+	strptr = 0; // null the pointer for the kill
 
 	if (!(DynArrayPick = new char[strlen(strArray) + 1])) {
 		cout << "ERROR out of RAM\n";
@@ -627,7 +627,7 @@ int pickForGenejump(char *argv[]) {
 }
 
 int pickForInsertion(char *argv[]) {
-	char *strptr;   // char pointer for strings
+	char *strptr; // char pointer for strings
 	char *DynArrayPick; // pointer for dynamic arrays
 	char *DynArrayTransp; // pointer for dynamic arrays
 	unsigned long long spin_1;
@@ -686,12 +686,12 @@ void loadxy(char *questionData) {
 		}
 
 		fitSize--;
-		rewind(XYfile);  // resart the file at the begining
+		rewind(XYfile); // resart the file at the begining
 
 		for (i = 0; i < fitSize; i++) {
-			fscanf(XYfile, "%s", (char *) &temp);   // scan a number X
+			fscanf(XYfile, "%s", (char *) &temp); // scan a number X
 			arrayXY.loadX(i, atoi(temp));
-			fscanf(XYfile, "%s", (char *) &temp);   // scan a number Y
+			fscanf(XYfile, "%s", (char *) &temp); // scan a number Y
 			arrayXY.loadY(i, atol(temp));
 		}
 
@@ -706,7 +706,7 @@ void first_run(char *argv[]) {
 	int x; // for char
 	char cmdStr[60];
 	cmdStr[0] = 0;
-	strcpy(cmdStr, argv[23]); //argv[15] node name stem
+	strcpy(cmdStr, argv[23]); // argv[15] node name stem
 	strcat(cmdStr, ".pop.dat");
 
 	if ((file_in = fopen(cmdStr, "r")) == NULL) {
@@ -796,7 +796,7 @@ int calcfit(char expresion[], char *argv[]) {
 			fit--;
 		}
 
-		num.pop(temp1);   // pop the answer
+		num.pop(temp1); // pop the answer
 
 		if (num.isEmpty() != 1 || op.isEmpty() != 1) {
 			error((char *) " Main Stacks not empty", argv);
@@ -844,13 +844,13 @@ void geneJump(char *strIn, char *argv[]) {
 	strOut = strchr(strIn, 'F'); // test for F in string
 
 	if (strOut) {
-		return;   // if has F then return
+		return; // if has F then return
 	}
 
 	strOut = strchr(strIn, 'k'); // test for k in string
 
 	if (strOut) {
-		return;   // if has k then return
+		return; // if has k then return
 	}
 
 	// made and tested array for swap
@@ -984,7 +984,7 @@ void spliceOutGene(char *strPtr, int minGeneSizeOut, int maxGeneSizeOut,
 	return;
 }
 
-// adds introns to string
+ // adds introns to string
 void introns(char *Astring, char *argv[]) {
 	float number;
 	int dec, sign, ndig = 4;
@@ -1025,17 +1025,17 @@ void introns(char *Astring, char *argv[]) {
 	}
 
 	zeros[i] = 0; // end with nul
-	numberStr[0] = 0;        // set string to nul
+	numberStr[0] = 0; // set string to nul
 	zero_or_one = gp_rand() % 2; // two choices  0 or 1
 
 	if (zero_or_one == 0) {
-		strcpy(numberStr, " -.");    // put -decimal point in array
+		strcpy(numberStr, " -."); // put -decimal point in array
 	} else {
-		strcpy(numberStr, " .");    // put +decimal point in array
+		strcpy(numberStr, " ."); // put +decimal point in array
 	}
 
 	strcat(numberStr, zeros); // then zeros
-	strcat(numberStr, floats);  // and cat the number
+	strcat(numberStr, floats); // and cat the number
 	x = 6;
 
 	// remove zeros from end of number
@@ -1053,7 +1053,7 @@ void introns(char *Astring, char *argv[]) {
 		x++;
 	}
 
-	//  load the first part of the intron
+	// load the first part of the intron
 	if (strArray[x - 1] != ')' || strArray[x - 1] != ' ') {
 		strArray[x] = ' ';
 		x++;
@@ -1069,9 +1069,9 @@ void introns(char *Astring, char *argv[]) {
 	}
 
 	x++;
-	strArray[x] = ' ';  // just a space
+	strArray[x] = ' '; // just a space
 	x++;
-	strArray[x] = '(';  // makes "(
+	strArray[x] = '('; // makes "(
 	x++;
 
 	if (zero_or_one == 0) {
@@ -1132,7 +1132,7 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend) {
 	int closeParen;
 	int count;
 	int Astart;
-	char *ptr;  // pointer to the start of the string
+	char *ptr; // pointer to the start of the string
 
 	if (stopChar == '@') {
 		Astart = 0; // cross the main function
@@ -1147,10 +1147,10 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend) {
 	// till at stopChar
 	while (Astring[Aplace] != stopChar) {
 		if (Astring[Aplace] == '(') {
-			openParenA++;  // count number of open paren in string
+			openParenA++; // count number of open paren in string
 		}
 
-		Aplace++;    // move and test the next char
+		Aplace++; // move and test the next char
 	}
 
 	Aplace = Astart; // here Aplace is an index
@@ -1159,10 +1159,10 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend) {
 	while (Astring[Aplace] != stopChar) {
 		if (Astring[Aplace] == '.' || Astring[Aplace] == 'X' ||
 				Astring[Aplace] == 'k') {
-			leafCountA++;  // count number of leaves in string
+			leafCountA++; // count number of leaves in string
 		}
 
-		Aplace++;    // move and test the next char
+		Aplace++; // move and test the next char
 	}
 
 	randA = (gp_rand() % (openParenA + leafCountA) + 1);
@@ -1174,10 +1174,10 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend) {
 
 		while (count < randA) {
 			if (Astring[Aplace] == '(') {
-				count++;  // count the open paren till = randA
+				count++; // count the open paren till = randA
 			}
 
-			Aplace++;  // Aplace becomes the position for this randa open
+			Aplace++; // Aplace becomes the position for this randa open
 		}
 
 		Aend = Aplace;
@@ -1192,7 +1192,7 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend) {
 				closeParen++; // add for every close paren
 			}
 
-			Aend++;  // Aend is now the index for the close paren
+			Aend++; // Aend is now the index for the close paren
 		} // Aplace is the index for the start
 
 		Aplace--; // backup to get '('
@@ -1214,10 +1214,10 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend) {
 			Aplace++;
 
 			if (Astring[Aplace] == '.' || Astring[Aplace] == 'X' || Astring[Aplace] == 'k')
-			{ count++; }  // count the leaves till = randA
+			{ count++; } // count the leaves till = randA
 		}
 
-		//test for sign on leaf
+		// test for sign on leaf
 		if (Astring[Aplace - 1] == '-') {
 			Aplace--; // if negative backup one
 		}
@@ -1227,14 +1227,14 @@ void getIndex(char stopChar, char *Astring, int &Aplace, int &Aend) {
 		while (Astring[Aend] != ')' && Astring[Aend] != ' ' && Astring[Aend] != '(' &&
 				Astring[Aend] != stopChar &&
 				Astring[Aend] != 0) {
-			Aend++;  // Aend is now the position for end of leaf
+			Aend++; // Aend is now the position for end of leaf
 		}
 
 		Aplace--; // and backup one to pickup space on front end
 	}
 }
 
-// kill the weekest random 3
+ // kill the weekest random 3
 void kill(char *argv[]) {
 	int k, i, j, x;
 
@@ -1242,12 +1242,12 @@ void kill(char *argv[]) {
 		k = pop.getMin();
 		i = pop.getMinCount(k);
 		j = gp_rand() % i; // makes j the rand pick of lowest fitness value
-		pop.first();   // set current to first one in list
+		pop.first(); // set current to first one in list
 
 		if (j == 0 && pop.getFit() == k) {
 			pop.remove(); // remove
 		} else {
-			if (pop.getFit() == k) { i = 1; }   // getfitness of current node
+			if (pop.getFit() == k) { i = 1; } // getfitness of current node
 			else { i = 0; }
 
 			while (i < j) {
@@ -1268,7 +1268,7 @@ void kill(char *argv[]) {
 
 long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize,
 					char *argv[]) {
-	char *atptr;  // @ptr
+	char *atptr; // @ptr
 	char *kptr;
 	long double temp1 = 0;
 	int index;
@@ -1317,25 +1317,25 @@ long double recalcF(char expresion[], int &i, int x, int &divBy0, int &overSize,
 		error((char *) "problem here", argv);
 	}
 
-	//till end of string
+	// till end of string
 	while (atptr[index] != 0) {
 		// temp1 is sent as k value
 		switchCase(atptr, index, x, temp1, divBy0, overSize,
 				   argv); // x is the index for x
 	}
 
-	num.pop(temp1);   // pop the answer
+	num.pop(temp1); // pop the answer
 	return temp1;
 }
-//-------------------------------------------------------------
+ // -------------------------------------------------------------
 
 void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
 				int &overSize, char *argv[]) {
 	long double temp1;
 	long double temp2;
 	char tempchar;
-	char float_str[9];  // to hold floating point number as string
-	int sign = 1;  // 1 or -1
+	char float_str[9]; // to hold floating point number as string
+	int sign = 1; // 1 or -1
 	int j;
 	int tooLarge = 10000000;
 	double tooSmall = 0.0000001;
@@ -1373,8 +1373,8 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
 
 				i++;
 			} else { // it is a negative sign
-				sign = -1;   // set sign to negative
-				i++;         // so go past the negative sign
+				sign = -1; // set sign to negative
+				i++; // so go past the negative sign
 
 				if (expresion[i] == '.') { // if number
 				case '.':
@@ -1396,7 +1396,7 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
 				} else { // else not number is k or X or F
 					if (expresion[i] == 'k') { // if X
 					case 'k':
-						if (num.push(sign * k)) {} //load X from array into stack
+						if (num.push(sign * k)) {} // load X from array into stack
 						else {
 							error((char *) "expresion k num Stack full", argv);
 						}
@@ -1404,14 +1404,14 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
 
 					if (expresion[i] == 'X') { // if X
 					case 'X':
-						if (num.push(sign * arrayXY.getX(x))) {} //load X from array into stack
+						if (num.push(sign * arrayXY.getX(x))) {} // load X from array into stack
 						else {
 							error((char *) "expresion X num Stack full", argv);
 						}
 					}
 
 					i++; // past the X or F or k
-					sign = 1;   // reset used or not
+					sign = 1; // reset used or not
 				}
 			}
 
@@ -1423,7 +1423,7 @@ void switchCase(char expresion[], int &i, int x, long double k, int &divBy0,
 			break;
 
 		case ')':
-			num.pop(temp1);  // pop top of stack last on first off
+			num.pop(temp1); // pop top of stack last on first off
 			num.pop(temp2);
 			op.pop(tempchar);
 
@@ -1540,7 +1540,7 @@ void exitOut(char *argv[], int fit) {
 	fileName[0] = 0;
 	strcpy(fileName, argv[23]);
 	strcat(fileName, ".results.dat");
-	stream = fopen(fileName, "a");  // append to file
+	stream = fopen(fileName, "a"); // append to file
 	// print all 24 args
 	fprintf(stream,
 			"%3d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
@@ -1557,7 +1557,7 @@ void writeOut(char *argv[]) {
 	fileName[0] = 0;
 	strcpy(fileName, argv[23]);
 	strcat(fileName, ".pop.log");
-	stream = fopen(fileName, "a");  // append to file
+	stream = fopen(fileName, "a"); // append to file
 	pop.first(); // set to first in list
 
 	do {
@@ -1572,7 +1572,7 @@ void buildString(char side, char boolein) {
 	int x;
 	char opArray[2];
 	char numberStr[7];
-	function[0] = 0;    // reset string to clear it
+	function[0] = 0; // reset string to clear it
 	strcpy(function, "("); // start out with open "("
 	strcat(function, p.operators(opArray)); // add the op
 	x = (gp_rand() % 4); // makes 0 to 3
@@ -1624,7 +1624,7 @@ void buildString(char side, char boolein) {
 void leaf(char boolein) {
 	char opArray[2];
 	char numberStr[7];
-	leafArray[0] = 0;       // clear the array
+	leafArray[0] = 0; // clear the array
 
 	// y = yes to F( no to k
 	if (gp_rand() % 3 == 0 && boolein == 'y') {

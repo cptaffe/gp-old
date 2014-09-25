@@ -1,18 +1,18 @@
-// Phil H Williams Jan-15-20013
+ // Phil H Williams Jan-15-20013
 
-// c++ libs
+ // c++ libs
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
 #include <iomanip>
 
-// c libs
+ // c libs
 #include <math.h>
 #include <locale.h>
 #include <stdio.h>
 #include <string.h>
 
-// local libs
+ // local libs
 #include "poprand4.h"
 
 using namespace std;
@@ -77,31 +77,31 @@ char *randpop::numberStr(char bol, char *numberStr) {
 		zeros[0] = 0; // clear string
 		i = 0;
 
-		while (dec < 0) {     // add zeros to front of number if needed
+		while (dec < 0) { // add zeros to front of number if needed
 			zeros[i] = '0';
 			i++;
 			dec++;
 		}
 
 		zeros[i] = 0; // end with nul
-		numberStr[0] = 0;        // set string to nul
+		numberStr[0] = 0; // set string to nul
 		negOrpos = rand() % 2; // two choices  0 or 1
 
 		if (negOrpos == 0) {
-			strcpy(numberStr, " -.");    // put -decimal point in array
+			strcpy(numberStr, " -."); // put -decimal point in array
 		} else {
-			strcpy(numberStr, " .");    // put +decimal point in array
+			strcpy(numberStr, " ."); // put +decimal point in array
 		}
 
 		strcat(numberStr, zeros); // then zeros
 		y = strlen(floats) - 1;
 
-		while (floats[y] == '0') {  // remove zeros from end of number
-			floats[y] = '\0';  // replace zero with null
+		while (floats[y] == '0') { // remove zeros from end of number
+			floats[y] = '\0'; // replace zero with null
 			y--;
 		}
 
-		strcat(numberStr, floats);  // and cat the number
+		strcat(numberStr, floats); // and cat the number
 	}
 
 	return numberStr;

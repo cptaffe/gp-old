@@ -20,10 +20,10 @@ public:
 	int push(const T &);
 	int pop(T &);
 	int isEmpty() const {
-		return top == -1;    // return 1 if empty
+		return top == -1; // return 1 if empty
 	}
 	int isFull()  const {
-		return top == size - 1;  // return 1 if full
+		return top == size - 1; // return 1 if full
 	}
 };
 
@@ -49,7 +49,7 @@ int Tstack2< T >::push(const  T &item) {
 		return 1;
 	}
 
-	return 0;  // else return 0 if fail from full
+	return 0; // else return 0 if fail from full
 }
 
 template< class T >
@@ -59,7 +59,7 @@ int Tstack2< T >::pop(T &popValue) {
 		return 1;
 	}
 
-	return 0;  // else return 0
+	return 0; // else return 0
 }
 
 #endif
